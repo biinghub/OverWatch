@@ -1,0 +1,11 @@
+rules: list()
+---
+  rules:
+    - rule-name: str()
+      event: str() #Can restrict this to events we pre-define using enum()
+      severity: enum('critical', 'high', 'medium', 'low')
+      actions:
+        - type: "alert"
+          params:
+            target: "slack"
+            channel: "#shits-on-fire"
