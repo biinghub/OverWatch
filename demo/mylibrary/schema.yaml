@@ -727,27 +727,8 @@ properties:
                 type: string
         required:
         - AlarmName
-        - AlarmDescription
-        - ActionsEnabled
-        - OKActions
-        - AlarmActions
-        - InsufficientDataActions
-        - MetricName
-        - Namespace
-        - Statistic
-        - ExtendedStatistic
-        - Dimensions
-        - Period
-        - Unit
         - EvaluationPeriods
-        - DatapointsToAlarm
-        - Threshold
         - ComparisonOperator
-        - TreatMissingData
-        - EvaluateLowSampleCountPercentile
-        - Metrics
-        - Tags
-        - ThresholdMetricId
         title: The Alarm schema
         type: object
     Metric:
@@ -904,9 +885,6 @@ properties:
                         - metricName
                         - metricNamespace
                         - metricValue
-                        - defaultValue
-                        - dimensions
-                        - unit
                         title: The first anyOf schema
                         type: object
                 title: The metricTransformations schema
