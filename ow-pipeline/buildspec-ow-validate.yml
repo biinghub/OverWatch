@@ -11,4 +11,4 @@ phases:
   build:
     on-failure: ABORT
     commands:
-      - python demo/validator.py
+      - python demo/mylibrary/validator.py
