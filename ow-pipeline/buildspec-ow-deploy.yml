@@ -5,7 +5,7 @@ phases:
     commands:
       - echo Entered OverWatch Deployment Setup
       - pip install boto3
-      - pip install -r ow-deploy-requirements.txt
+      - pip install -r ow-pipeline/ow-deploy-requirements.txt
     finally:
       - echo OverWatch Deployment Setup
   build:
