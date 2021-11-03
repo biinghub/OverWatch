@@ -1,0 +1,14 @@
+version: 0.2
+phases:
+  ow-install:
+    on-failure: ABORT
+    commands:
+      - echo Entered OverWatch Deployment Setup
+      - pip install boto3
+      - pip install -r ow-deploy-requirements.txt
+    finally:
+      - echo OverWatch Deployment Setup
+  ow-deploy:
+    on-failure: ABORT
+    commands:
+      - python helloworld.py

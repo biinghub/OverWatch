@@ -1,0 +1,14 @@
+version: 0.2
+phases:
+  ow-install:
+    on-failure: ABORT
+    commands:
+      - echo Entered OverWatch Validate Setup
+      - pip install boto3
+      - pip install -r ow-validate-requirements.txt
+    finally:
+      - echo OverWatch Validate Setup
+  ow-validation:
+    on-failure: ABORT
+    commands:
+      - python validator.py
