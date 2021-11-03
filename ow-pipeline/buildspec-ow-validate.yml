@@ -5,7 +5,7 @@ phases:
     commands:
       - echo Entered OverWatch Validate Setup
       - pip install boto3
-      - pip install -r ow-validate-requirements.txt
+      - pip install -r ow-pipeline/ow-validate-requirements.txt
     finally:
       - echo OverWatch Validate Setup
   build:
