@@ -1,0 +1,20 @@
+$id: http://example.com/example.json
+$schema: http://json-schema.org/draft-07/schema
+additionalProperties: true
+default: {}
+description: The root schema comprises the entire JSON document.
+examples:
+-   Test: 1
+properties:
+    Test:
+        $id: '#/properties/Test'
+        default: 0
+        description: An explanation about the purpose of this instance.
+        examples:
+        - 1
+        title: The Test schema
+        type: integer
+required:
+- Test
+title: The root schema
+type: object
