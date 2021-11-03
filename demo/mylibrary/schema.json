@@ -194,7 +194,10 @@
                                 "required": [
                                     "metricName",
                                     "metricNamespace",
-                                    "metricValue"
+                                    "metricValue",
+                                    "defaultValue",
+                                    "dimensions",
+                                    "unit"
                                 ],
                                 "properties": {
                                     "metricName": {
@@ -229,23 +232,23 @@
                                     },
                                     "defaultValue": {
                                         "$id": "#/properties/Metric/properties/metricTransformations/items/anyOf/0/properties/defaultValue",
-                                        "default": 0.0,
+                                        "type": "number",
+                                        "title": "The defaultValue schema",
                                         "description": "An explanation about the purpose of this instance.",
+                                        "default": 0.0,
                                         "examples": [
                                             1.23
-                                        ],
-                                        "title": "The defaultValue schema",
-                                        "type": "number"
+                                        ]
                                     },
                                     "dimensions": {
                                         "$id": "#/properties/Metric/properties/metricTransformations/items/anyOf/0/properties/dimensions",
-                                        "default": "",
+                                        "type": "string",
+                                        "title": "The dimensions schema",
                                         "description": "An explanation about the purpose of this instance.",
+                                        "default": "",
                                         "examples": [
                                             "string"
-                                        ],
-                                        "title": "The dimensions schema",
-                                        "type": "string"
+                                        ]
                                     },
                                     "unit": {
                                         "$id": "#/properties/Metric/properties/metricTransformations/items/anyOf/0/properties/unit",
@@ -369,8 +372,27 @@
             ],
             "required": [
                 "AlarmName",
+                "AlarmDescription",
+                "ActionsEnabled",
+                "OKActions",
+                "AlarmActions",
+                "InsufficientDataActions",
+                "MetricName",
+                "Namespace",
+                "Statistic",
+                "ExtendedStatistic",
+                "Dimensions",
+                "Period",
+                "Unit",
                 "EvaluationPeriods",
-                "ComparisonOperator"
+                "DatapointsToAlarm",
+                "Threshold",
+                "ComparisonOperator",
+                "TreatMissingData",
+                "EvaluateLowSampleCountPercentile",
+                "Metrics",
+                "Tags",
+                "ThresholdMetricId"
             ],
             "properties": {
                 "AlarmName": {
@@ -407,6 +429,11 @@
                     "$id": "#/properties/Alarm/properties/OKActions",
                     "default": [],
                     "description": "An explanation about the purpose of this instance.",
+                    "examples": [
+                        "arn:aws:automate:*region* :ec2:stop",
+                        "arn:aws:automate:*region* :ec2:terminate"
+                    ],
+                    "title": "The OKActions schema",
                     "enum": [
                         "arn:aws:automate:*region* :ec2:stop",
                         "arn:aws:automate:*region* :ec2:terminate",
@@ -419,13 +446,6 @@
                         "arn:aws:swf:*region* :*account-id* :action/actions/AWS_EC2.InstanceId.Reboot/1.0",
                         "arn:aws:swf:*region* :*account-id* :action/actions/AWS_EC2.InstanceId.Recover/1.0"
                     ],
-                    "examples": [
-                        [
-                            "arn:aws:automate:*region* :ec2:stop",
-                            "arn:aws:automate:*region* :ec2:terminate"
-                        ]
-                    ],
-                    "title": "The OKActions schema",
                     "type": "array",
                     "additionalItems": true,
                     "items": {
@@ -450,10 +470,8 @@
                     "default": [],
                     "description": "An explanation about the purpose of this instance.",
                     "examples": [
-                        [
-                            "arn:aws:automate:*region* :ec2:stop",
-                            "arn:aws:automate:*region* :ec2:terminate"
-                        ]
+                        "arn:aws:automate:*region* :ec2:stop",
+                        "arn:aws:automate:*region* :ec2:terminate"
                     ],
                     "title": "The AlarmActions schema",
                     "enum": [
@@ -489,15 +507,13 @@
                 },
                 "InsufficientDataActions": {
                     "$id": "#/properties/Alarm/properties/InsufficientDataActions",
-                    "type": "array",
-                    "title": "The InsufficientDataActions schema",
-                    "description": "An explanation about the purpose of this instance.",
                     "default": [],
+                    "description": "An explanation about the purpose of this instance.",
                     "examples": [
-                        [
-                            "String"
-                        ]
+                        "String"
                     ],
+                    "title": "The InsufficientDataActions schema",
+                    "type": "array",
                     "additionalItems": true,
                     "items": {
                         "$id": "#/properties/Alarm/properties/InsufficientDataActions/items",
@@ -564,10 +580,8 @@
                 },
                 "Dimensions": {
                     "$id": "#/properties/Alarm/properties/Dimensions",
-                    "type": "object",
-                    "title": "The Dimensions schema",
-                    "description": "An explanation about the purpose of this instance.",
                     "default": {},
+                    "description": "An explanation about the purpose of this instance.",
                     "examples": [
                         {
                             "Name": "string",
@@ -578,6 +592,8 @@
                         "Name",
                         "Value"
                     ],
+                    "title": "The Dimensions schema",
+                    "type": "object",
                     "properties": {
                         "Name": {
                             "$id": "#/properties/Alarm/properties/Dimensions/properties/Name",

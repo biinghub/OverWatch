@@ -3,9 +3,7 @@ from jsonschema.validators import Draft4Validator
 import yaml
 import os
 import json
-import jsonschema
 from jsonschema import validate
-from yaml.loader import Loader
 
 #Taken from: https://stackoverflow.com/questions/1724693/find-a-file-in-python
 #Used to find path of 'rules.yaml' file in the root of user's project directory. 
@@ -16,7 +14,7 @@ def find(name, path):
             return os.path.join(root, name)
 
 def load_rules(): 
-    with open(str(find('rules2.yaml', os.path.abspath(os.curdir)))) as f:
+    with open(str(find('rules.yaml', os.path.abspath(os.curdir)))) as f:
         rules = yaml.load(f, Loader=yaml.FullLoader)
     return json.dumps(rules)
 
@@ -24,7 +22,9 @@ def validate_rules():
     with open(str(find('schema.yaml', os.path.abspath(os.curdir)))) as f:
         schema = yaml.load(f, Loader=yaml.FullLoader)
         try:
-            validate(instance=yaml.load(load_rules(), Loader=yaml.FullLoader), schema=schema)
+            rules = load_rules()
+            cleaned_rules = json.loads(rules)
+            validate(instance=cleaned_rules[0], schema=schema)
         except jsonschema.ValidationError as err:
             print(err)
             err = "Invalid Rules File"
