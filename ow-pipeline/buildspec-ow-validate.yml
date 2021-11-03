@@ -1,6 +1,6 @@
 version: 0.2
 phases:
-  ow-install:
+  install:
     on-failure: ABORT
     commands:
       - echo Entered OverWatch Validate Setup
@@ -8,7 +8,7 @@ phases:
       - pip install -r ow-validate-requirements.txt
     finally:
       - echo OverWatch Validate Setup
-  ow-validation:
+  build:
     on-failure: ABORT
     commands:
       - python validator.py

@@ -1,6 +1,6 @@
 version: 0.2
 phases:
-  ow-install:
+  install:
     on-failure: ABORT
     commands:
       - echo Entered OverWatch Deployment Setup
@@ -8,7 +8,7 @@ phases:
       - pip install -r ow-deploy-requirements.txt
     finally:
       - echo OverWatch Deployment Setup
-  ow-deploy:
+  build:
     on-failure: ABORT
     commands:
-      - python helloworld.py
+      - python -c 'print("hello world!")'
