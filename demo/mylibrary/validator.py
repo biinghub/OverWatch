@@ -4,6 +4,7 @@ import yaml
 import os
 import json
 from jsonschema import validate
+import boto3
 
 #Custom Exception Handling for smoother debugging
 class DuplicateNameException(Exception):
@@ -63,8 +64,32 @@ class OverwatchValidator():
                 metricNames.append(rule['Metric']['filterName'])
             else:
                 raise DuplicateNameException("filterName must be unique.") 
+    ''' Attempt at using Boto3 to get all filterNames and AlarmNames currently in cloud and compare with local rules file to avoid conflict
+    def get_local_alarm_names(self):
+        result = []
+        rules = self.load_rules()
+        cleaned_rules = json.loads(rules)
+        for rule in cleaned_rules:
+            result.append(rule['Metric']['filterName'])
+        return result
+
+    def get_local_metric_names(self):
+        result = []
+        rules = self.load_rules()
+        cleaned_rules = json.loads(rules)
+        for rule in cleaned_rules:
+            result.append(rule['Alarm']['AlarmName'])
+        return result 
+
+    def validate_boto3_resources(self):
+        cloudwatch = boto3.client('cloudwatch')
+        logs = boto3.client('logs')
+        local_alarm_names = self.get_local_alarm_names()
+        local_metric_names = self.get_local_metric_names()
+    '''
 
     def validate(self):
+        #Any other functions that are apart of the validation process add it here
         self.validate_alarm_attributes()  
         self.validate_metric_attributes()
         is_valid, msg = self.validate_rules_structure()
