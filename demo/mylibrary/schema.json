@@ -1,0 +1,1159 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+        {
+            "Metric": {
+                "filterName": "FilterName",
+                "filterPattern": "FilterPattern",
+                "logGroupName": "Log",
+                "metricTransformations": [
+                    {
+                        "metricName": "metricname",
+                        "metricNamespace": "metricnamespace",
+                        "metricValue": "stringmetricvalue",
+                        "defaultValue": 1.23,
+                        "dimensions": "string",
+                        "unit": "Seconds"
+                    }
+                ]
+            },
+            "Alarm": {
+                "AlarmName": "alarmnamestring",
+                "AlarmDescription": "string",
+                "ActionsEnabled": true,
+                "OKActions": [
+                    "arn:aws:automate:*region* :ec2:stop",
+                    "arn:aws:automate:*region* :ec2:terminate"
+                ],
+                "AlarmActions": [
+                    "arn:aws:automate:*region* :ec2:stop",
+                    "arn:aws:automate:*region* :ec2:terminate"
+                ],
+                "InsufficientDataActions": [
+                    "String"
+                ],
+                "MetricName": "string",
+                "Namespace": "string",
+                "Statistic": "SampleCount",
+                "ExtendedStatistic": "string",
+                "Dimensions": {
+                    "Name": "string",
+                    "Value": "string"
+                },
+                "Period": 123,
+                "Unit": "Seconds",
+                "EvaluationPeriods": 123,
+                "DatapointsToAlarm": 123,
+                "Threshold": 123.0,
+                "ComparisonOperator": "GreaterThanThreshold",
+                "TreatMissingData": "string",
+                "EvaluateLowSampleCountPercentile": "string",
+                "Metrics": [
+                    {
+                        "Id": "String",
+                        "MetricStat": {
+                            "Metric": {
+                                "Namespace": "string",
+                                "MetricName": "string",
+                                "Dimensions": [
+                                    {
+                                        "Name": "sting",
+                                        "Value": "string"
+                                    }
+                                ]
+                            },
+                            "Period": 123,
+                            "Stat": "string",
+                            "Unit": "Seconds"
+                        },
+                        "Expression": "string",
+                        "Label": "string",
+                        "ReturnData": true,
+                        "Period": 123,
+                        "AccountId": "string"
+                    }
+                ],
+                "Tags": [
+                    {
+                        "Key": "string",
+                        "Value": "string"
+                    }
+                ],
+                "ThresholdMetricId": "string"
+            }
+        }
+    ],
+    "required": [
+        "Metric",
+        "Alarm"
+    ],
+    "properties": {
+        "Metric": {
+            "$id": "#/properties/Metric",
+            "type": "object",
+            "title": "The Metric schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "filterName": "FilterName",
+                    "filterPattern": "FilterPattern",
+                    "logGroupName": "Log",
+                    "metricTransformations": [
+                        {
+                            "metricName": "metricname",
+                            "metricNamespace": "metricnamespace",
+                            "metricValue": "stringmetricvalue",
+                            "defaultValue": 1.23,
+                            "dimensions": "string",
+                            "unit": "Seconds"
+                        }
+                    ]
+                }
+            ],
+            "required": [
+                "filterName",
+                "filterPattern",
+                "logGroupName",
+                "metricTransformations"
+            ],
+            "properties": {
+                "filterName": {
+                    "$id": "#/properties/Metric/properties/filterName",
+                    "type": "string",
+                    "title": "The filterName schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "FilterName"
+                    ]
+                },
+                "filterPattern": {
+                    "$id": "#/properties/Metric/properties/filterPattern",
+                    "type": "string",
+                    "title": "The filterPattern schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "FilterPattern"
+                    ]
+                },
+                "logGroupName": {
+                    "$id": "#/properties/Metric/properties/logGroupName",
+                    "type": "string",
+                    "title": "The logGroupName schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "Log"
+                    ]
+                },
+                "metricTransformations": {
+                    "$id": "#/properties/Metric/properties/metricTransformations",
+                    "type": "array",
+                    "title": "The metricTransformations schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": [],
+                    "examples": [
+                        [
+                            {
+                                "metricName": "metricname",
+                                "metricNamespace": "metricnamespace",
+                                "metricValue": "stringmetricvalue",
+                                "defaultValue": 1.23,
+                                "dimensions": "string",
+                                "unit": "Seconds"
+                            }
+                        ]
+                    ],
+                    "additionalItems": true,
+                    "items": {
+                        "$id": "#/properties/Metric/properties/metricTransformations/items",
+                        "anyOf": [
+                            {
+                                "$id": "#/properties/Metric/properties/metricTransformations/items/anyOf/0",
+                                "type": "object",
+                                "title": "The first anyOf schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": {},
+                                "examples": [
+                                    {
+                                        "metricName": "metricname",
+                                        "metricNamespace": "metricnamespace",
+                                        "metricValue": "stringmetricvalue",
+                                        "defaultValue": 1.23,
+                                        "dimensions": "string",
+                                        "unit": "Seconds"
+                                    }
+                                ],
+                                "required": [
+                                    "metricName",
+                                    "metricNamespace",
+                                    "metricValue",
+                                    "defaultValue",
+                                    "dimensions",
+                                    "unit"
+                                ],
+                                "properties": {
+                                    "metricName": {
+                                        "$id": "#/properties/Metric/properties/metricTransformations/items/anyOf/0/properties/metricName",
+                                        "type": "string",
+                                        "title": "The metricName schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": "",
+                                        "examples": [
+                                            "metricname"
+                                        ]
+                                    },
+                                    "metricNamespace": {
+                                        "$id": "#/properties/Metric/properties/metricTransformations/items/anyOf/0/properties/metricNamespace",
+                                        "type": "string",
+                                        "title": "The metricNamespace schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": "",
+                                        "examples": [
+                                            "metricnamespace"
+                                        ]
+                                    },
+                                    "metricValue": {
+                                        "$id": "#/properties/Metric/properties/metricTransformations/items/anyOf/0/properties/metricValue",
+                                        "type": "string",
+                                        "title": "The metricValue schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": "",
+                                        "examples": [
+                                            "stringmetricvalue"
+                                        ]
+                                    },
+                                    "defaultValue": {
+                                        "$id": "#/properties/Metric/properties/metricTransformations/items/anyOf/0/properties/defaultValue",
+                                        "type": "number",
+                                        "title": "The defaultValue schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": 0.0,
+                                        "examples": [
+                                            1.23
+                                        ]
+                                    },
+                                    "dimensions": {
+                                        "$id": "#/properties/Metric/properties/metricTransformations/items/anyOf/0/properties/dimensions",
+                                        "type": "string",
+                                        "title": "The dimensions schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": "",
+                                        "examples": [
+                                            "string"
+                                        ]
+                                    },
+                                    "unit": {
+                                        "$id": "#/properties/Metric/properties/metricTransformations/items/anyOf/0/properties/unit",
+                                        "default": "",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "examples": [
+                                            "Seconds"
+                                        ],
+                                        "title": "The unit schema",
+                                        "enum": [
+                                            "Seconds",
+                                            "Microseconds",
+                                            "Milliseconds",
+                                            "Bytes",
+                                            "Kilobytes",
+                                            "Megabytes",
+                                            "Gigabytes",
+                                            "Terabytes",
+                                            "Bits",
+                                            "Kilobits",
+                                            "Megabits",
+                                            "Gigabits",
+                                            "Terabits",
+                                            "Percent",
+                                            "Count",
+                                            "Bytes/Second",
+                                            "Kilobytes/Second",
+                                            "Megabytes/Second",
+                                            "Gigabytes/Second",
+                                            "Terabytes/Second",
+                                            "Bits/Second",
+                                            "Kilobits/Second",
+                                            "Megabits/Second",
+                                            "Gigabits/Second",
+                                            "Terabits/Second",
+                                            "Count/Second",
+                                            "None"
+                                        ],
+                                        "type": "string"
+                                    }
+                                },
+                                "additionalProperties": true
+                            }
+                        ]
+                    }
+                }
+            },
+            "additionalProperties": true
+        },
+        "Alarm": {
+            "$id": "#/properties/Alarm",
+            "type": "object",
+            "title": "The Alarm schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "AlarmName": "alarmnamestring",
+                    "AlarmDescription": "string",
+                    "ActionsEnabled": true,
+                    "OKActions": [
+                        "arn:aws:automate:*region* :ec2:stop",
+                        "arn:aws:automate:*region* :ec2:terminate"
+                    ],
+                    "AlarmActions": [
+                        "arn:aws:automate:*region* :ec2:stop",
+                        "arn:aws:automate:*region* :ec2:terminate"
+                    ],
+                    "InsufficientDataActions": [
+                        "String"
+                    ],
+                    "MetricName": "string",
+                    "Namespace": "string",
+                    "Statistic": "SampleCount",
+                    "ExtendedStatistic": "string",
+                    "Dimensions": {
+                        "Name": "string",
+                        "Value": "string"
+                    },
+                    "Period": 123,
+                    "Unit": "Seconds",
+                    "EvaluationPeriods": 123,
+                    "DatapointsToAlarm": 123,
+                    "Threshold": 123.0,
+                    "ComparisonOperator": "GreaterThanThreshold",
+                    "TreatMissingData": "string",
+                    "EvaluateLowSampleCountPercentile": "string",
+                    "Metrics": [
+                        {
+                            "Id": "String",
+                            "MetricStat": {
+                                "Metric": {
+                                    "Namespace": "string",
+                                    "MetricName": "string",
+                                    "Dimensions": [
+                                        {
+                                            "Name": "sting",
+                                            "Value": "string"
+                                        }
+                                    ]
+                                },
+                                "Period": 123,
+                                "Stat": "string",
+                                "Unit": "Seconds"
+                            },
+                            "Expression": "string",
+                            "Label": "string",
+                            "ReturnData": true,
+                            "Period": 123,
+                            "AccountId": "string"
+                        }
+                    ],
+                    "Tags": [
+                        {
+                            "Key": "string",
+                            "Value": "string"
+                        }
+                    ],
+                    "ThresholdMetricId": "string"
+                }
+            ],
+            "required": [
+                "AlarmName",
+                "AlarmDescription",
+                "ActionsEnabled",
+                "OKActions",
+                "AlarmActions",
+                "InsufficientDataActions",
+                "MetricName",
+                "Namespace",
+                "Statistic",
+                "ExtendedStatistic",
+                "Dimensions",
+                "Period",
+                "Unit",
+                "EvaluationPeriods",
+                "DatapointsToAlarm",
+                "Threshold",
+                "ComparisonOperator",
+                "TreatMissingData",
+                "EvaluateLowSampleCountPercentile",
+                "Metrics",
+                "Tags",
+                "ThresholdMetricId"
+            ],
+            "properties": {
+                "AlarmName": {
+                    "$id": "#/properties/Alarm/properties/AlarmName",
+                    "type": "string",
+                    "title": "The AlarmName schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "alarmnamestring"
+                    ]
+                },
+                "AlarmDescription": {
+                    "$id": "#/properties/Alarm/properties/AlarmDescription",
+                    "type": "string",
+                    "title": "The AlarmDescription schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "string"
+                    ]
+                },
+                "ActionsEnabled": {
+                    "$id": "#/properties/Alarm/properties/ActionsEnabled",
+                    "type": "boolean",
+                    "title": "The ActionsEnabled schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": false,
+                    "examples": [
+                        true
+                    ]
+                },
+                "OKActions": {
+                    "$id": "#/properties/Alarm/properties/OKActions",
+                    "default": [],
+                    "description": "An explanation about the purpose of this instance.",
+                    "examples": [
+                        "arn:aws:automate:*region* :ec2:stop",
+                        "arn:aws:automate:*region* :ec2:terminate"
+                    ],
+                    "title": "The OKActions schema",
+                    "enum": [
+                        "arn:aws:automate:*region* :ec2:stop",
+                        "arn:aws:automate:*region* :ec2:terminate",
+                        "arn:aws:automate:*region* :ec2:recover",
+                        "arn:aws:automate:*region* :ec2:reboot",
+                        "arn:aws:sns:region :account-id :sns-topic-name",
+                        "arn:aws:autoscaling:region :account-id :scalingPolicy:policy-id :autoScalingGroupName/group-friendly-name :policyName/policy-friendly-name",
+                        "arn:aws:swf:*region* :*account-id* :action/actions/AWS_EC2.InstanceId.Stop/1.0",
+                        "arn:aws:swf:*region* :*account-id* :action/actions/AWS_EC2.InstanceId.Terminate/1.0",
+                        "arn:aws:swf:*region* :*account-id* :action/actions/AWS_EC2.InstanceId.Reboot/1.0",
+                        "arn:aws:swf:*region* :*account-id* :action/actions/AWS_EC2.InstanceId.Recover/1.0"
+                    ],
+                    "type": "array",
+                    "additionalItems": true,
+                    "items": {
+                        "$id": "#/properties/Alarm/properties/OKActions/items",
+                        "anyOf": [
+                            {
+                                "$id": "#/properties/Alarm/properties/OKActions/items/anyOf/0",
+                                "type": "string",
+                                "title": "The first anyOf schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": "",
+                                "examples": [
+                                    "arn:aws:automate:*region* :ec2:stop",
+                                    "arn:aws:automate:*region* :ec2:terminate"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "AlarmActions": {
+                    "$id": "#/properties/Alarm/properties/AlarmActions",
+                    "default": [],
+                    "description": "An explanation about the purpose of this instance.",
+                    "examples": [
+                        "arn:aws:automate:*region* :ec2:stop",
+                        "arn:aws:automate:*region* :ec2:terminate"
+                    ],
+                    "title": "The AlarmActions schema",
+                    "enum": [
+                        "arn:aws:automate:*region* :ec2:stop",
+                        "arn:aws:automate:*region* :ec2:terminate",
+                        "arn:aws:automate:*region* :ec2:recover",
+                        "arn:aws:automate:*region* :ec2:reboot",
+                        "arn:aws:sns:region :account-id :sns-topic-name",
+                        "arn:aws:autoscaling:region :account-id :scalingPolicy:policy-id :autoScalingGroupName/group-friendly-name :policyName/policy-friendly-name",
+                        "arn:aws:swf:*region* :*account-id* :action/actions/AWS_EC2.InstanceId.Stop/1.0",
+                        "arn:aws:swf:*region* :*account-id* :action/actions/AWS_EC2.InstanceId.Terminate/1.0",
+                        "arn:aws:swf:*region* :*account-id* :action/actions/AWS_EC2.InstanceId.Reboot/1.0",
+                        "arn:aws:swf:*region* :*account-id* :action/actions/AWS_EC2.InstanceId.Recover/1.0"
+                    ],
+                    "type": "array",
+                    "additionalItems": true,
+                    "items": {
+                        "$id": "#/properties/Alarm/properties/AlarmActions/items",
+                        "anyOf": [
+                            {
+                                "$id": "#/properties/Alarm/properties/AlarmActions/items/anyOf/0",
+                                "type": "string",
+                                "title": "The first anyOf schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": "",
+                                "examples": [
+                                    "arn:aws:automate:*region* :ec2:stop",
+                                    "arn:aws:automate:*region* :ec2:terminate"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "InsufficientDataActions": {
+                    "$id": "#/properties/Alarm/properties/InsufficientDataActions",
+                    "default": [],
+                    "description": "An explanation about the purpose of this instance.",
+                    "examples": [
+                        "String"
+                    ],
+                    "title": "The InsufficientDataActions schema",
+                    "type": "array",
+                    "additionalItems": true,
+                    "items": {
+                        "$id": "#/properties/Alarm/properties/InsufficientDataActions/items",
+                        "anyOf": [
+                            {
+                                "$id": "#/properties/Alarm/properties/InsufficientDataActions/items/anyOf/0",
+                                "type": "string",
+                                "title": "The first anyOf schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": "",
+                                "examples": [
+                                    "String"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "MetricName": {
+                    "$id": "#/properties/Alarm/properties/MetricName",
+                    "type": "string",
+                    "title": "The MetricName schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "string"
+                    ]
+                },
+                "Namespace": {
+                    "$id": "#/properties/Alarm/properties/Namespace",
+                    "type": "string",
+                    "title": "The Namespace schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "string"
+                    ]
+                },
+                "Statistic": {
+                    "$id": "#/properties/Alarm/properties/Statistic",
+                    "default": "",
+                    "description": "An explanation about the purpose of this instance.",
+                    "examples": [
+                        "SampleCount"
+                    ],
+                    "title": "The Statistic schema",
+                    "enum": [
+                        "SampleCount",
+                        "Average",
+                        "Sum",
+                        "Minimum",
+                        "Maximum"
+                    ],
+                    "type": "string"
+                },
+                "ExtendedStatistic": {
+                    "$id": "#/properties/Alarm/properties/ExtendedStatistic",
+                    "type": "string",
+                    "title": "The ExtendedStatistic schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "string"
+                    ]
+                },
+                "Dimensions": {
+                    "$id": "#/properties/Alarm/properties/Dimensions",
+                    "default": {},
+                    "description": "An explanation about the purpose of this instance.",
+                    "examples": [
+                        {
+                            "Name": "string",
+                            "Value": "string"
+                        }
+                    ],
+                    "required": [
+                        "Name",
+                        "Value"
+                    ],
+                    "title": "The Dimensions schema",
+                    "type": "object",
+                    "properties": {
+                        "Name": {
+                            "$id": "#/properties/Alarm/properties/Dimensions/properties/Name",
+                            "type": "string",
+                            "title": "The Name schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "string"
+                            ]
+                        },
+                        "Value": {
+                            "$id": "#/properties/Alarm/properties/Dimensions/properties/Value",
+                            "type": "string",
+                            "title": "The Value schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "string"
+                            ]
+                        }
+                    },
+                    "additionalProperties": true
+                },
+                "Period": {
+                    "$id": "#/properties/Alarm/properties/Period",
+                    "type": "integer",
+                    "title": "The Period schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        123
+                    ]
+                },
+                "Unit": {
+                    "$id": "#/properties/Alarm/properties/Unit",
+                    "default": "",
+                    "description": "An explanation about the purpose of this instance.",
+                    "examples": [
+                        "Seconds"
+                    ],
+                    "title": "The Unit schema",
+                    "enum": [
+                        "Seconds",
+                        "Microseconds",
+                        "Milliseconds",
+                        "Bytes",
+                        "Kilobytes",
+                        "Megabytes",
+                        "Gigabytes",
+                        "Terabytes",
+                        "Bits",
+                        "Kilobits",
+                        "Megabits",
+                        "Gigabits",
+                        "Terabits",
+                        "Percent",
+                        "Count",
+                        "Bytes/Second",
+                        "Kilobytes/Second",
+                        "Megabytes/Second",
+                        "Gigabytes/Second",
+                        "Terabytes/Second",
+                        "Bits/Second",
+                        "Kilobits/Second",
+                        "Megabits/Second",
+                        "Gigabits/Second",
+                        "Terabits/Second",
+                        "Count/Second",
+                        "None"
+                    ],
+                    "type": "string"
+                },
+                "EvaluationPeriods": {
+                    "$id": "#/properties/Alarm/properties/EvaluationPeriods",
+                    "type": "integer",
+                    "title": "The EvaluationPeriods schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        123
+                    ]
+                },
+                "DatapointsToAlarm": {
+                    "$id": "#/properties/Alarm/properties/DatapointsToAlarm",
+                    "type": "integer",
+                    "title": "The DatapointsToAlarm schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        123
+                    ]
+                },
+                "Threshold": {
+                    "$id": "#/properties/Alarm/properties/Threshold",
+                    "type": "number",
+                    "title": "The Threshold schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0.0,
+                    "examples": [
+                        123.0
+                    ]
+                },
+                "ComparisonOperator": {
+                    "$id": "#/properties/Alarm/properties/ComparisonOperator",
+                    "default": "",
+                    "description": "An explanation about the purpose of this instance.",
+                    "examples": [
+                        "GreaterThanThreshold"
+                    ],
+                    "title": "The ComparisonOperator schema",
+                    "enum": [
+                        "GreaterThanOrEqualToThreshold",
+                        "GreaterThanThreshold",
+                        "LessThanThreshold",
+                        "LessThanOrEqualToThreshold",
+                        "LessThanLowerOrGreaterThanUpperThreshold",
+                        "LessThanLowerThreshold",
+                        "GreaterThanUpperThreshold"
+                    ],
+                    "type": "string"
+                },
+                "TreatMissingData": {
+                    "$id": "#/properties/Alarm/properties/TreatMissingData",
+                    "type": "string",
+                    "title": "The TreatMissingData schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "string"
+                    ]
+                },
+                "EvaluateLowSampleCountPercentile": {
+                    "$id": "#/properties/Alarm/properties/EvaluateLowSampleCountPercentile",
+                    "type": "string",
+                    "title": "The EvaluateLowSampleCountPercentile schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "string"
+                    ]
+                },
+                "Metrics": {
+                    "$id": "#/properties/Alarm/properties/Metrics",
+                    "type": "array",
+                    "title": "The Metrics schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": [],
+                    "examples": [
+                        [
+                            {
+                                "Id": "String",
+                                "MetricStat": {
+                                    "Metric": {
+                                        "Namespace": "string",
+                                        "MetricName": "string",
+                                        "Dimensions": [
+                                            {
+                                                "Name": "sting",
+                                                "Value": "string"
+                                            }
+                                        ]
+                                    },
+                                    "Period": 123,
+                                    "Stat": "string",
+                                    "Unit": "Seconds"
+                                },
+                                "Expression": "string",
+                                "Label": "string",
+                                "ReturnData": true,
+                                "Period": 123,
+                                "AccountId": "string"
+                            }
+                        ]
+                    ],
+                    "additionalItems": true,
+                    "items": {
+                        "$id": "#/properties/Alarm/properties/Metrics/items",
+                        "anyOf": [
+                            {
+                                "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0",
+                                "type": "object",
+                                "title": "The first anyOf schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": {},
+                                "examples": [
+                                    {
+                                        "Id": "String",
+                                        "MetricStat": {
+                                            "Metric": {
+                                                "Namespace": "string",
+                                                "MetricName": "string",
+                                                "Dimensions": [
+                                                    {
+                                                        "Name": "sting",
+                                                        "Value": "string"
+                                                    }
+                                                ]
+                                            },
+                                            "Period": 123,
+                                            "Stat": "string",
+                                            "Unit": "Seconds"
+                                        },
+                                        "Expression": "string",
+                                        "Label": "string",
+                                        "ReturnData": true,
+                                        "Period": 123,
+                                        "AccountId": "string"
+                                    }
+                                ],
+                                "required": [
+                                    "Id",
+                                    "MetricStat",
+                                    "Expression",
+                                    "Label",
+                                    "ReturnData",
+                                    "Period",
+                                    "AccountId"
+                                ],
+                                "properties": {
+                                    "Id": {
+                                        "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/Id",
+                                        "type": "string",
+                                        "title": "The Id schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": "",
+                                        "examples": [
+                                            "String"
+                                        ]
+                                    },
+                                    "MetricStat": {
+                                        "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/MetricStat",
+                                        "type": "object",
+                                        "title": "The MetricStat schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": {},
+                                        "examples": [
+                                            {
+                                                "Metric": {
+                                                    "Namespace": "string",
+                                                    "MetricName": "string",
+                                                    "Dimensions": [
+                                                        {
+                                                            "Name": "sting",
+                                                            "Value": "string"
+                                                        }
+                                                    ]
+                                                },
+                                                "Period": 123,
+                                                "Stat": "string",
+                                                "Unit": "Seconds"
+                                            }
+                                        ],
+                                        "required": [
+                                            "Metric",
+                                            "Period",
+                                            "Stat",
+                                            "Unit"
+                                        ],
+                                        "properties": {
+                                            "Metric": {
+                                                "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/MetricStat/properties/Metric",
+                                                "type": "object",
+                                                "title": "The Metric schema",
+                                                "description": "An explanation about the purpose of this instance.",
+                                                "default": {},
+                                                "examples": [
+                                                    {
+                                                        "Namespace": "string",
+                                                        "MetricName": "string",
+                                                        "Dimensions": [
+                                                            {
+                                                                "Name": "sting",
+                                                                "Value": "string"
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "required": [
+                                                    "Namespace",
+                                                    "MetricName",
+                                                    "Dimensions"
+                                                ],
+                                                "properties": {
+                                                    "Namespace": {
+                                                        "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/MetricStat/properties/Metric/properties/Namespace",
+                                                        "type": "string",
+                                                        "title": "The Namespace schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "string"
+                                                        ]
+                                                    },
+                                                    "MetricName": {
+                                                        "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/MetricStat/properties/Metric/properties/MetricName",
+                                                        "type": "string",
+                                                        "title": "The MetricName schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": "",
+                                                        "examples": [
+                                                            "string"
+                                                        ]
+                                                    },
+                                                    "Dimensions": {
+                                                        "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/MetricStat/properties/Metric/properties/Dimensions",
+                                                        "type": "array",
+                                                        "title": "The Dimensions schema",
+                                                        "description": "An explanation about the purpose of this instance.",
+                                                        "default": [],
+                                                        "examples": [
+                                                            [
+                                                                {
+                                                                    "Name": "sting",
+                                                                    "Value": "string"
+                                                                }
+                                                            ]
+                                                        ],
+                                                        "additionalItems": true,
+                                                        "items": {
+                                                            "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/MetricStat/properties/Metric/properties/Dimensions/items",
+                                                            "anyOf": [
+                                                                {
+                                                                    "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/MetricStat/properties/Metric/properties/Dimensions/items/anyOf/0",
+                                                                    "type": "object",
+                                                                    "title": "The first anyOf schema",
+                                                                    "description": "An explanation about the purpose of this instance.",
+                                                                    "default": {},
+                                                                    "examples": [
+                                                                        {
+                                                                            "Name": "sting",
+                                                                            "Value": "string"
+                                                                        }
+                                                                    ],
+                                                                    "required": [
+                                                                        "Name",
+                                                                        "Value"
+                                                                    ],
+                                                                    "properties": {
+                                                                        "Name": {
+                                                                            "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/MetricStat/properties/Metric/properties/Dimensions/items/anyOf/0/properties/Name",
+                                                                            "type": "string",
+                                                                            "title": "The Name schema",
+                                                                            "description": "An explanation about the purpose of this instance.",
+                                                                            "default": "",
+                                                                            "examples": [
+                                                                                "sting"
+                                                                            ]
+                                                                        },
+                                                                        "Value": {
+                                                                            "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/MetricStat/properties/Metric/properties/Dimensions/items/anyOf/0/properties/Value",
+                                                                            "type": "string",
+                                                                            "title": "The Value schema",
+                                                                            "description": "An explanation about the purpose of this instance.",
+                                                                            "default": "",
+                                                                            "examples": [
+                                                                                "string"
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    "additionalProperties": true
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                "additionalProperties": true
+                                            },
+                                            "Period": {
+                                                "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/MetricStat/properties/Period",
+                                                "type": "integer",
+                                                "title": "The Period schema",
+                                                "description": "An explanation about the purpose of this instance.",
+                                                "default": 0,
+                                                "examples": [
+                                                    123
+                                                ]
+                                            },
+                                            "Stat": {
+                                                "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/MetricStat/properties/Stat",
+                                                "type": "string",
+                                                "title": "The Stat schema",
+                                                "description": "An explanation about the purpose of this instance.",
+                                                "default": "",
+                                                "examples": [
+                                                    "string"
+                                                ]
+                                            },
+                                            "Unit": {
+                                                "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/MetricStat/properties/Unit",
+                                                "default": "",
+                                                "description": "An explanation about the purpose of this instance.",
+                                                "examples": [
+                                                    "Seconds"
+                                                ],
+                                                "title": "The Unit schema",
+                                                "enum": [
+                                                    "Seconds",
+                                                    "Microseconds",
+                                                    "Milliseconds",
+                                                    "Bytes",
+                                                    "Kilobytes",
+                                                    "Megabytes",
+                                                    "Gigabytes",
+                                                    "Terabytes",
+                                                    "Bits",
+                                                    "Kilobits",
+                                                    "Megabits",
+                                                    "Gigabits",
+                                                    "Terabits",
+                                                    "Percent",
+                                                    "Count",
+                                                    "Bytes/Second",
+                                                    "Kilobytes/Second",
+                                                    "Megabytes/Second",
+                                                    "Gigabytes/Second",
+                                                    "Terabytes/Second",
+                                                    "Bits/Second",
+                                                    "Kilobits/Second",
+                                                    "Megabits/Second",
+                                                    "Gigabits/Second",
+                                                    "Terabits/Second",
+                                                    "Count/Second",
+                                                    "None"
+                                                ],
+                                                "type": "string"
+                                            }
+                                        },
+                                        "additionalProperties": true
+                                    },
+                                    "Expression": {
+                                        "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/Expression",
+                                        "type": "string",
+                                        "title": "The Expression schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": "",
+                                        "examples": [
+                                            "string"
+                                        ]
+                                    },
+                                    "Label": {
+                                        "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/Label",
+                                        "type": "string",
+                                        "title": "The Label schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": "",
+                                        "examples": [
+                                            "string"
+                                        ]
+                                    },
+                                    "ReturnData": {
+                                        "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/ReturnData",
+                                        "type": "boolean",
+                                        "title": "The ReturnData schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": false,
+                                        "examples": [
+                                            true
+                                        ]
+                                    },
+                                    "Period": {
+                                        "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/Period",
+                                        "type": "integer",
+                                        "title": "The Period schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": 0,
+                                        "examples": [
+                                            123
+                                        ]
+                                    },
+                                    "AccountId": {
+                                        "$id": "#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/AccountId",
+                                        "type": "string",
+                                        "title": "The AccountId schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": "",
+                                        "examples": [
+                                            "string"
+                                        ]
+                                    }
+                                },
+                                "additionalProperties": true
+                            }
+                        ]
+                    }
+                },
+                "Tags": {
+                    "$id": "#/properties/Alarm/properties/Tags",
+                    "type": "array",
+                    "title": "The Tags schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": [],
+                    "examples": [
+                        [
+                            {
+                                "Key": "string",
+                                "Value": "string"
+                            }
+                        ]
+                    ],
+                    "additionalItems": true,
+                    "items": {
+                        "$id": "#/properties/Alarm/properties/Tags/items",
+                        "anyOf": [
+                            {
+                                "$id": "#/properties/Alarm/properties/Tags/items/anyOf/0",
+                                "type": "object",
+                                "title": "The first anyOf schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": {},
+                                "examples": [
+                                    {
+                                        "Key": "string",
+                                        "Value": "string"
+                                    }
+                                ],
+                                "required": [
+                                    "Key",
+                                    "Value"
+                                ],
+                                "properties": {
+                                    "Key": {
+                                        "$id": "#/properties/Alarm/properties/Tags/items/anyOf/0/properties/Key",
+                                        "type": "string",
+                                        "title": "The Key schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": "",
+                                        "examples": [
+                                            "string"
+                                        ]
+                                    },
+                                    "Value": {
+                                        "$id": "#/properties/Alarm/properties/Tags/items/anyOf/0/properties/Value",
+                                        "type": "string",
+                                        "title": "The Value schema",
+                                        "description": "An explanation about the purpose of this instance.",
+                                        "default": "",
+                                        "examples": [
+                                            "string"
+                                        ]
+                                    }
+                                },
+                                "additionalProperties": true
+                            }
+                        ]
+                    }
+                },
+                "ThresholdMetricId": {
+                    "$id": "#/properties/Alarm/properties/ThresholdMetricId",
+                    "type": "string",
+                    "title": "The ThresholdMetricId schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "string"
+                    ]
+                }
+            },
+            "additionalProperties": true
+        }
+    },
+    "additionalProperties": true
+}
