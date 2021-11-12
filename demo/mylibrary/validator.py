@@ -64,7 +64,9 @@ class OverwatchValidator():
                 metricNames.append(rule['Metric']['filterName'])
             else:
                 raise DuplicateNameException("filterName must be unique.") 
-    ''' Attempt at using Boto3 to get all filterNames and AlarmNames currently in cloud and compare with local rules file to avoid conflict
+    
+    #get_local_alarm_names and get_local_metric_names are simply helper functions for developers
+    #these two functions are NOT used in validation step 
     def get_local_alarm_names(self):
         result = []
         rules = self.load_rules()
@@ -80,13 +82,7 @@ class OverwatchValidator():
         for rule in cleaned_rules:
             result.append(rule['Alarm']['AlarmName'])
         return result 
-
-    def validate_boto3_resources(self):
-        cloudwatch = boto3.client('cloudwatch')
-        logs = boto3.client('logs')
-        local_alarm_names = self.get_local_alarm_names()
-        local_metric_names = self.get_local_metric_names()
-    '''
+    
 
     def validate(self):
         #Any other functions that are apart of the validation process add it here
