@@ -1,0 +1,60 @@
+---
+-   Alarm:
+        ActionsEnabled: true
+        AlarmActions:
+        - arn:aws:automate:*region* :ec2:stop
+        - arn:aws:automate:*region* :ec2:terminate
+        AlarmDescription: string
+        AlarmName: alarmnamestring
+        ComparisonOperator: GreaterThanThreshold
+        DatapointsToAlarm: 123
+        Dimensions:
+            Name: string
+            Value: string
+        EvaluateLowSampleCountPercentile: string
+        EvaluationPeriods: 123
+        ExtendedStatistic: string
+        InsufficientDataActions:
+        - String
+        MetricName: string
+        Metrics:
+        -   AccountId: string
+            Expression: string
+            Id: String
+            Label: string
+            MetricStat:
+                Metric:
+                    Dimensions:
+                    -   Name: sting
+                        Value: string
+                    MetricName: string
+                    Namespace: string
+                Period: 123
+                Stat: string
+                Unit: Seconds
+            Period: 123
+            ReturnData: true
+        Namespace: string
+        OKActions:
+        - arn:aws:automate:*region* :ec2:stop
+        - arn:aws:automate:*region* :ec2:terminate
+        Period: 123
+        Statistic: SampleCount
+        Tags:
+        -   Key: string
+            Value: string
+        Threshold: 123.0
+        ThresholdMetricId: string
+        TreatMissingData: string
+        Unit: Seconds
+    Metric:
+        filterName: FilterName
+        filterPattern: FilterPattern
+        logGroupName: Log
+        metricTransformations:
+        -   defaultValue: 1.23
+            dimensions: string
+            metricName: metricname
+            metricNamespace: metricnamespace
+            metricValue: stringmetricvalue
+            unit: Seconds
