@@ -66,7 +66,7 @@ class OverWatchValidateStack(Stack):
                                 "echo Entered OverWatch Validate Setup",
                                 "TMPDIR=$(mktemp -d)",
                                 "echo \"Syncing from OverWatch Bucket at $BUCKET to $TMPDIR\"",
-                                "aws s3 sync s3://$BUCKET $TMPDIR",
+                                "aws s3 sync $BUCKET $TMPDIR",
                                 "pip3 install -r $TMPDIR/validator_requirements.txt"
                             ],
                             "finally": ["echo OverWatch Validate Setup Complete"],
