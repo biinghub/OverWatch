@@ -67,7 +67,7 @@ class OverWatchValidateStack(Stack):
                                 "TMPDIR=$(mktemp -d)",
                                 "echo \"Syncing from OverWatch Bucket at $BUCKET to $TMPDIR\"",
                                 "aws s3 sync s3://$BUCKET $TMPDIR",
-                                "pip3 install -r $TMPDIR/ow-core/validator/requirements.txt"
+                                "pip install -r $TMPDIR/ow-core/validator/requirements.txt"
                             ],
                             "finally": ["echo OverWatch Validate Setup Complete"],
                         },
@@ -127,7 +127,7 @@ class OverWatchDeployStack(Stack):
                                 "TMPDIR=$(mktemp -d)",
                                 "echo \"Syncing from OverWatch Bucket at $BUCKET to $TMPDIR\"",
                                 "aws s3 sync s3://$BUCKET $TMPDIR",
-                                "pip3 install -r $TMPDIR/ow-core/deployer/requirements.txt"
+                                "pip install -r $TMPDIR/ow-core/deployer/requirements.txt"
                             ],
                             "finally": ["echo OverWatch Deployment Setup Complete"],
                         },
