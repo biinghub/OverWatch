@@ -75,8 +75,8 @@ class OverWatchValidateStack(Stack):
                             "on-failure": "ABORT",
                             "commands": [
                                 "echo Entered OverWatch Validate",
-                                "chmod +x $TMPDIR/validator",
-                                "python3 $TMPDIR/validator \"$RULEPATH\" \"$AUTOFIND\"",
+                                "chmod +x $(TMPDIR)/ow-core/validator/validator",
+                                "python3 $(TMPDIR)/ow-core/validator/validator \"$RULEPATH\" \"$AUTOFIND\"",
                             ],
                             "finally": ["echo OverWatch Validate Complete"],
                         },
@@ -135,8 +135,8 @@ class OverWatchDeployStack(Stack):
                             "on-failure": "ABORT",
                             "commands": [
                                 "echo Entered OverWatch Deploy",
-                                "chmod +x $TMPDIR/deployer",
-                                "python3 $TMPDIR/deployer \"$RULEPATH\" \"$AUTOFIND\"",
+                                "chmod +x $(TMPDIR)/ow-core/deployer/deployer",
+                                "python3 $(TMPDIR)/ow-core/deployer/deployer \"$RULEPATH\" \"$AUTOFIND\"",
                             ],
                             "finally": ["echo OverWatch Deploy Complete"],
                         },
