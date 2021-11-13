@@ -75,7 +75,7 @@ class OverWatchValidateStack(Stack):
                             "on-failure": "ABORT",
                             "commands": [
                                 "echo Entered OverWatch Validate",
-                                "$TMPDIR/.validator \"$RULEPATH\" \"$AUTOFIND\"",
+                                "$TMPDIR/validator \"$RULEPATH\" \"$AUTOFIND\"",
                             ],
                             "finally": ["echo OverWatch Validate Complete"],
                         },
@@ -134,7 +134,7 @@ class OverWatchDeployStack(Stack):
                             "on-failure": "ABORT",
                             "commands": [
                                 "echo Entered OverWatch Deploy",
-                                "$TMPDIR/.deployer \"$RULEPATH\" \"$AUTOFIND\"",
+                                "$TMPDIR/deployer \"$RULEPATH\" \"$AUTOFIND\"",
                             ],
                             "finally": ["echo OverWatch Deploy Complete"],
                         },
