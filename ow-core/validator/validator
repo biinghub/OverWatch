@@ -8,8 +8,20 @@ import argparse
 
 # Arguments Engine
 parser = argparse.ArgumentParser(description="OverWatch Rules Validator")
-parser.add_argument('rules_path', metavar='path', type=str, nargs='?', default='rules.yaml', help='Path to rules yaml | fileName of rules yaml file if autofind flag is set | Default: "rules.yaml"')
-parser.add_argument('--autofind', dest='autofind', action='store_true', help='Enables autofinding of filename in <rules_path>')
+parser.add_argument(
+    "rules_path",
+    metavar="path",
+    type=str,
+    nargs="?",
+    default="rules.yaml",
+    help='Path to rules yaml | fileName of rules yaml file if autofind flag is set | Default: "rules.yaml"',
+)
+parser.add_argument(
+    "--autofind",
+    dest="autofind",
+    action="store_true",
+    help="Enables autofinding of filename in <rules_path>",
+)
 
 # Path to Schema
 SCHEMA_PATH = "ow-core/validator/schema.yaml"
@@ -34,7 +46,11 @@ class OverwatchValidator:
                 return os.path.join(root, name)
 
     def load_rules(self):
-        filepath = str(self.find(self.rule_path, os.path.abspath(os.curdir))) if self.autofind else self.rule_path
+        filepath = (
+            str(self.find(self.rule_path, os.path.abspath(os.curdir)))
+            if self.autofind
+            else self.rule_path
+        )
         with open(filepath) as f:
             rules = yaml.load(f, Loader=yaml.FullLoader)
         return json.dumps(rules)
