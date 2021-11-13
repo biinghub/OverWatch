@@ -1,10 +1,10 @@
+#!/usr/bin/python3
+
 import jsonschema
-from jsonschema.validators import Draft4Validator
 import yaml
-import os
 import json
-from jsonschema import validate
-import boto3
+import os
+import sys
 
 # Custom Exception Handling for smoother debugging
 class DuplicateNameException(Exception):
@@ -13,11 +13,7 @@ class DuplicateNameException(Exception):
 
 
 class OverwatchValidator:
-    def __init__(self, rules="rules.yaml"):
-        self.rules = rules
-
-    # Helper Function to allow developers to choose rules filename
-    def set_rules(self, rules):
+    def __init__(self, rules):
         self.rules = rules
 
     # Taken from: https://stackoverflow.com/questions/1724693/find-a-file-in-python
@@ -29,7 +25,6 @@ class OverwatchValidator:
                 return os.path.join(root, name)
 
     def load_rules(self):
-        # TODO - Add in warning for developers that the default rules file is 'rules.yaml' - however they can change this with set_rules()
         with open(str(self.find(self.rules, os.path.abspath(os.curdir)))) as f:
             rules = yaml.load(f, Loader=yaml.FullLoader)
         return json.dumps(rules)
@@ -40,7 +35,7 @@ class OverwatchValidator:
             try:
                 rules = self.load_rules()
                 cleaned_rules = json.loads(rules)
-                validate(instance=cleaned_rules[0], schema=schema)
+                jsonschema.validate(instance=cleaned_rules[0], schema=schema)
             except jsonschema.ValidationError as error:
                 print(error)
                 err = "Invalid Rules File"
@@ -91,6 +86,7 @@ class OverwatchValidator:
         self.validate_alarm_attributes()
         self.validate_metric_attributes()
         is_valid, msg = self.validate_rules_structure()
+        # TODO: perhaps actual and real error messaging?
         print(msg)
         if not is_valid:
             exit(1)
@@ -98,5 +94,12 @@ class OverwatchValidator:
 
 
 if __name__ == "__main__":
+    # validator class instance
     validator = OverwatchValidator()
-    validator.validate()
+
+    # if no args given, error out
+    if len(sys.argv) != 2:
+        raise "Usage: ./validator <path_to_rules>"
+
+    # if path given, attempt to validate
+    validator.validate(sys.argv[1])
