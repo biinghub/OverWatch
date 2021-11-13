@@ -4,7 +4,15 @@ import jsonschema
 import yaml
 import json
 import os
-import sys
+import argparse
+
+# Arguments Engine
+parser = argparse.ArgumentParser(description="OverWatch Rules Validator")
+parser.add_argument('rules_path', metavar='path', type=str, nargs='?', default='rules.yaml', help='Path to rules yaml | fileName of rules yaml file if autofind flag is set | Default: "rules.yaml"')
+parser.add_argument('--autofind', dest='autofind', action='store_true', help='Enables autofinding of filename in <rules_path>')
+
+# Path to Schema
+SCHEMA_PATH = "ow-core/validator/schema.yaml"
 
 # Custom Exception Handling for smoother debugging
 class DuplicateNameException(Exception):
@@ -13,8 +21,9 @@ class DuplicateNameException(Exception):
 
 
 class OverwatchValidator:
-    def __init__(self, rules):
-        self.rules = rules
+    def __init__(self, rule_path, autofind):
+        self.rule_path = rule_path
+        self.autofind = autofind
 
     # Taken from: https://stackoverflow.com/questions/1724693/find-a-file-in-python
     # Used to find path of 'rules.yaml' file in the root of user's project directory.
@@ -25,23 +34,21 @@ class OverwatchValidator:
                 return os.path.join(root, name)
 
     def load_rules(self):
-        with open(str(self.find(self.rules, os.path.abspath(os.curdir)))) as f:
+        filepath = str(self.find(self.rule_path, os.path.abspath(os.curdir))) if self.autofind else self.rule_path
+        with open(filepath) as f:
             rules = yaml.load(f, Loader=yaml.FullLoader)
         return json.dumps(rules)
 
     def validate_rules_structure(self):
-        with open(str(self.find("schema.yaml", os.path.abspath(os.curdir)))) as f:
+        with open(SCHEMA_PATH) as f:
             schema = yaml.load(f, Loader=yaml.FullLoader)
             try:
                 rules = self.load_rules()
                 cleaned_rules = json.loads(rules)
                 jsonschema.validate(instance=cleaned_rules[0], schema=schema)
             except jsonschema.ValidationError as error:
-                print(error)
-                err = "Invalid Rules File"
-                return False, err
-            message = "Valid Rules File"
-            return True, message
+                return False, "Invalid Rules File"
+            return True, "Valid Rules File"
 
     def validate_alarm_attributes(self):
         rules = self.load_rules()
@@ -94,12 +101,10 @@ class OverwatchValidator:
 
 
 if __name__ == "__main__":
+    # parse the arguments
+    args = parser.parse_args()
+
     # validator class instance
-    validator = OverwatchValidator()
-
-    # if no args given, error out
-    if len(sys.argv) != 2:
-        raise "Usage: ./validator <path_to_rules>"
-
+    validator = OverwatchValidator(args.rules_path, args.autofind)
     # if path given, attempt to validate
-    validator.validate(sys.argv[1])
+    validator.validate()
