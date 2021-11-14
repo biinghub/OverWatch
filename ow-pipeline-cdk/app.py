@@ -15,12 +15,24 @@ class OverWatchInfraStack(Stack):
         super().__init__(scope, id, **kwargs)
 
         # parse any arguments
-        rulesFilePath = CfnParameter(self, "rulesFilePath", default="rules.yaml",
-            description="Filepath or Filename of rules yaml file | Default 'rules.yaml'").value_as_string
-        autofind = CfnParameter(self, "enableAutofind", default="False",
-            description="Enables autofind of rules yaml file for OverWatch if parameter is present (and not 'False')").value_as_string
-        s3bucket = CfnParameter(self, "overWatchBucket", default="overwatchglobal",
-            description="Bucket ARN of OverWatch source s3 bucket | Default: 'overwatchglobal' - maintained by dev team").value_as_string
+        rulesFilePath = CfnParameter(
+            self,
+            "rulesFilePath",
+            default="rules.yaml",
+            description="Filepath or Filename of rules yaml file | Default 'rules.yaml'",
+        ).value_as_string
+        autofind = CfnParameter(
+            self,
+            "enableAutofind",
+            default="False",
+            description="Enables autofind of rules yaml file for OverWatch if parameter is present (and not 'False')",
+        ).value_as_string
+        s3bucket = CfnParameter(
+            self,
+            "overWatchBucket",
+            default="overwatchglobal",
+            description="Bucket ARN of OverWatch source s3 bucket | Default: 'overwatchglobal' - maintained by dev team",
+        ).value_as_string
 
         self.artifactBucket = s3.Bucket(
             self,
@@ -46,12 +58,24 @@ class OverWatchValidateStack(Stack):
         super().__init__(scope, id, **kwargs)
 
         # parse any arguments
-        rulesFilePath = CfnParameter(self, "rulesFilePath", default="rules.yaml",
-            description="Filepath or Filename of rules yaml file | Default 'rules.yaml'").value_as_string
-        autofind = CfnParameter(self, "enableAutofind", default="False",
-            description="Enables autofind of rules yaml file for OverWatch if parameter is present (and not 'False')").value_as_string
-        s3bucket = CfnParameter(self, "overWatchBucket", default="overwatchglobal",
-            description="Bucket ARN of OverWatch source s3 bucket | Default: 'overwatchglobal' - maintained by dev team").value_as_string
+        rulesFilePath = CfnParameter(
+            self,
+            "rulesFilePath",
+            default="rules.yaml",
+            description="Filepath or Filename of rules yaml file | Default 'rules.yaml'",
+        ).value_as_string
+        autofind = CfnParameter(
+            self,
+            "enableAutofind",
+            default="False",
+            description="Enables autofind of rules yaml file for OverWatch if parameter is present (and not 'False')",
+        ).value_as_string
+        s3bucket = CfnParameter(
+            self,
+            "overWatchBucket",
+            default="overwatchglobal",
+            description="Bucket ARN of OverWatch source s3 bucket | Default: 'overwatchglobal' - maintained by dev team",
+        ).value_as_string
 
         validate = codebuild.PipelineProject(
             self,
@@ -65,9 +89,9 @@ class OverWatchValidateStack(Stack):
                             "commands": [
                                 "echo Entered OverWatch Validate Setup",
                                 "TMPDIR=$(mktemp -d)",
-                                "echo \"Syncing from OverWatch Bucket at $BUCKET to $TMPDIR\"",
+                                'echo "Syncing from OverWatch Bucket at $BUCKET to $TMPDIR"',
                                 "aws s3 sync s3://$BUCKET $TMPDIR",
-                                "pip install -r $TMPDIR/ow-core/validator/requirements.txt"
+                                "pip install -r $TMPDIR/ow-core/validator/requirements.txt",
                             ],
                             "finally": ["echo OverWatch Validate Setup Complete"],
                         },
@@ -76,7 +100,7 @@ class OverWatchValidateStack(Stack):
                             "commands": [
                                 "echo Entered OverWatch Validate",
                                 "chmod +x $TMPDIR/ow-core/validator/validator",
-                                "python3 $TMPDIR/ow-core/validator/validator \"$RULEPATH\" \"$AUTOFIND\"",
+                                'python3 $TMPDIR/ow-core/validator/validator "$RULEPATH" "$AUTOFIND"',
                             ],
                             "finally": ["echo OverWatch Validate Complete"],
                         },
@@ -91,7 +115,7 @@ class OverWatchValidateStack(Stack):
                 "AUTOFIND": {"value": "--autofind" if autofind != "False" else ""},
                 "BUCKET": {"value": s3bucket},
             },
-    )
+        )
 
         # validate codebuild project has the permissions to get S3 objects (for codepipeline)
         # artifact store s3 bucket access
@@ -106,12 +130,24 @@ class OverWatchDeployStack(Stack):
         super().__init__(scope, id, **kwargs)
 
         # parse any arguments
-        rulesFilePath = CfnParameter(self, "rulesFilePath", default="rules.yaml",
-            description="Filepath or Filename of rules yaml file | Default 'rules.yaml'").value_as_string
-        autofind = CfnParameter(self, "enableAutofind", default="False",
-            description="Enables autofind of rules yaml file for OverWatch if parameter is present (and not 'False')").value_as_string
-        s3bucket = CfnParameter(self, "overWatchBucket", default="overwatchglobal",
-            description="Bucket ARN of OverWatch source s3 bucket | Default: 'overwatchglobal' - maintained by dev team").value_as_string
+        rulesFilePath = CfnParameter(
+            self,
+            "rulesFilePath",
+            default="rules.yaml",
+            description="Filepath or Filename of rules yaml file | Default 'rules.yaml'",
+        ).value_as_string
+        autofind = CfnParameter(
+            self,
+            "enableAutofind",
+            default="False",
+            description="Enables autofind of rules yaml file for OverWatch if parameter is present (and not 'False')",
+        ).value_as_string
+        s3bucket = CfnParameter(
+            self,
+            "overWatchBucket",
+            default="overwatchglobal",
+            description="Bucket ARN of OverWatch source s3 bucket | Default: 'overwatchglobal' - maintained by dev team",
+        ).value_as_string
 
         deploy = codebuild.PipelineProject(
             self,
@@ -125,9 +161,9 @@ class OverWatchDeployStack(Stack):
                             "commands": [
                                 "echo Entered OverWatch Deployment Setup",
                                 "TMPDIR=$(mktemp -d)",
-                                "echo \"Syncing from OverWatch Bucket at $BUCKET to $TMPDIR\"",
+                                'echo "Syncing from OverWatch Bucket at $BUCKET to $TMPDIR"',
                                 "aws s3 sync s3://$BUCKET $TMPDIR",
-                                "pip install -r $TMPDIR/ow-core/deployer/requirements.txt"
+                                "pip install -r $TMPDIR/ow-core/deployer/requirements.txt",
                             ],
                             "finally": ["echo OverWatch Deployment Setup Complete"],
                         },
@@ -136,7 +172,7 @@ class OverWatchDeployStack(Stack):
                             "commands": [
                                 "echo Entered OverWatch Deploy",
                                 "chmod +x $TMPDIR/ow-core/deployer/deployer",
-                                "python3 $TMPDIR/ow-core/deployer/deployer \"$RULEPATH\" \"$AUTOFIND\"",
+                                'python3 $TMPDIR/ow-core/deployer/deployer "$RULEPATH" "$AUTOFIND"',
                             ],
                             "finally": ["echo OverWatch Deploy Complete"],
                         },
@@ -175,6 +211,7 @@ class OverWatchService(Construct):
         owDeployStack.add_dependency(
             target=owValidateStack, reason="Require Validation for Deployment"
         )
+
 
 # Begin OverWatch Service deployment
 app = App()
