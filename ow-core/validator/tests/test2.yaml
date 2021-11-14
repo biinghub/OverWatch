@@ -1,0 +1,25 @@
+---
+-   Alarm:
+        AlarmName: alarmnamestring
+        ComparisonOperator: GreaterThanThreshold
+        EvaluationPeriods: 123
+    Metric:
+        filterName: FilterName
+        filterPattern: FilterPattern
+        logGroupName: Log
+        metricTransformations:
+        -   metricName: metricname
+            metricNamespace: metricnamespace
+            metricValue: stringmetricvalue
+-   Alarm:
+        AlarmName: alarmnamestring
+        ComparisonOperator: GreaterThanThreshold
+        EvaluationPeriods: 123
+    Metric:
+        filterName: FilterName
+        filterPattern: FilterPattern
+        logGroupName: Log
+        metricTransformations:
+        -   metricName: metricname
+            metricNamespace: metricnamespace
+            metricValue: stringmetricvalue

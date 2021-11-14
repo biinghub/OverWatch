@@ -62,7 +62,7 @@ class OverwatchValidator:
                 rules = self.load_rules()
                 cleaned_rules = json.loads(rules)
                 jsonschema.validate(instance=cleaned_rules[0], schema=schema)
-            except jsonschema.ValidationError as error:
+            except (jsonschema.ValidationError, KeyError) as error:
                 return False, "Invalid Rules File"
             return True, "Valid Rules File"
 
@@ -75,7 +75,7 @@ class OverwatchValidator:
                 alarmNames.append(rule["Alarm"]["AlarmName"])
             else:
                 raise DuplicateNameException("AlarmName must be unique.")
-
+        return alarmNames
     def validate_metric_attributes(self):
         rules = self.load_rules()
         cleaned_rules = json.loads(rules)
@@ -85,7 +85,7 @@ class OverwatchValidator:
                 metricNames.append(rule["Metric"]["filterName"])
             else:
                 raise DuplicateNameException("filterName must be unique.")
-
+        return metricNames
     # get_local_alarm_names and get_local_metric_names are simply helper functions for developers
     # these two functions are NOT used in validation step
     def get_local_alarm_names(self):
