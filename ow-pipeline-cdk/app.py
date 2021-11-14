@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from aws_cdk.core import App, Construct, Stack, RemovalPolicy
+from aws_cdk.core import App, Construct, Stack, RemovalPolicy, CfnParameter
 import aws_cdk.aws_codebuild as codebuild
 import aws_cdk.aws_iam as iam
 import aws_cdk.aws_s3 as s3
@@ -13,6 +13,26 @@ class OverWatchInfraStack(Stack):
 
     def __init__(self, scope: Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
+
+        # parse any arguments
+        rulesFilePath = CfnParameter(
+            self,
+            "rulesFilePath",
+            default="rules.yaml",
+            description="Filepath or Filename of rules yaml file | Default 'rules.yaml'",
+        ).value_as_string
+        autofind = CfnParameter(
+            self,
+            "enableAutofind",
+            default="False",
+            description="Enables autofind of rules yaml file for OverWatch if parameter is present (and not 'False')",
+        ).value_as_string
+        s3bucket = CfnParameter(
+            self,
+            "overWatchBucket",
+            default="overwatchglobal",
+            description="Bucket ARN of OverWatch source s3 bucket | Default: 'overwatchglobal' - maintained by dev team",
+        ).value_as_string
 
         self.artifactBucket = s3.Bucket(
             self,
@@ -37,6 +57,26 @@ class OverWatchValidateStack(Stack):
     ) -> None:
         super().__init__(scope, id, **kwargs)
 
+        # parse any arguments
+        rulesFilePath = CfnParameter(
+            self,
+            "rulesFilePath",
+            default="rules.yaml",
+            description="Filepath or Filename of rules yaml file | Default 'rules.yaml'",
+        ).value_as_string
+        autofind = CfnParameter(
+            self,
+            "enableAutofind",
+            default="False",
+            description="Enables autofind of rules yaml file for OverWatch if parameter is present (and not 'False')",
+        ).value_as_string
+        s3bucket = CfnParameter(
+            self,
+            "overWatchBucket",
+            default="overwatchglobal",
+            description="Bucket ARN of OverWatch source s3 bucket | Default: 'overwatchglobal' - maintained by dev team",
+        ).value_as_string
+
         validate = codebuild.PipelineProject(
             self,
             "ow-validate",
@@ -48,23 +88,33 @@ class OverWatchValidateStack(Stack):
                             "on-failure": "ABORT",
                             "commands": [
                                 "echo Entered OverWatch Validate Setup",
-                                "pip install boto3",
-                                "pip install json-schema==0.3 jsonschema==4.1.2 PyYAML==6.0",
+                                "TMPDIR=$(mktemp -d)",
+                                'echo "Syncing from OverWatch Bucket at $BUCKET to $TMPDIR"',
+                                "aws s3 sync s3://$BUCKET $TMPDIR",
+                                "pip install -r $TMPDIR/ow-core/validator/requirements.txt",
                             ],
                             "finally": ["echo OverWatch Validate Setup Complete"],
                         },
                         "build": {
                             "on-failure": "ABORT",
                             "commands": [
-                                "python demo/mylibrary/validator.py"  # TODO: Protect against fake file, perhaps do some temp directory trickery?
+                                "echo Entered OverWatch Validate",
+                                "chmod +x $TMPDIR/ow-core/validator/validator",
+                                'python3 $TMPDIR/ow-core/validator/validator "$RULEPATH" "$AUTOFIND"',
                             ],
+                            "finally": ["echo OverWatch Validate Complete"],
                         },
                     },
                 }
             ),
             environment=codebuild.BuildEnvironment(
-                build_image=codebuild.LinuxBuildImage.STANDARD_5_0
+                build_image=codebuild.LinuxBuildImage.STANDARD_5_0,
             ),
+            environment_variables={
+                "RULEPATH": {"value": rulesFilePath},
+                "AUTOFIND": {"value": "--autofind" if autofind != "False" else ""},
+                "BUCKET": {"value": s3bucket},
+            },
         )
 
         # validate codebuild project has the permissions to get S3 objects (for codepipeline)
@@ -79,6 +129,26 @@ class OverWatchDeployStack(Stack):
     ) -> None:
         super().__init__(scope, id, **kwargs)
 
+        # parse any arguments
+        rulesFilePath = CfnParameter(
+            self,
+            "rulesFilePath",
+            default="rules.yaml",
+            description="Filepath or Filename of rules yaml file | Default 'rules.yaml'",
+        ).value_as_string
+        autofind = CfnParameter(
+            self,
+            "enableAutofind",
+            default="False",
+            description="Enables autofind of rules yaml file for OverWatch if parameter is present (and not 'False')",
+        ).value_as_string
+        s3bucket = CfnParameter(
+            self,
+            "overWatchBucket",
+            default="overwatchglobal",
+            description="Bucket ARN of OverWatch source s3 bucket | Default: 'overwatchglobal' - maintained by dev team",
+        ).value_as_string
+
         deploy = codebuild.PipelineProject(
             self,
             "ow-deploy",
@@ -90,20 +160,33 @@ class OverWatchDeployStack(Stack):
                             "on-failure": "ABORT",
                             "commands": [
                                 "echo Entered OverWatch Deployment Setup",
-                                "pip install boto3",
+                                "TMPDIR=$(mktemp -d)",
+                                'echo "Syncing from OverWatch Bucket at $BUCKET to $TMPDIR"',
+                                "aws s3 sync s3://$BUCKET $TMPDIR",
+                                "pip install -r $TMPDIR/ow-core/deployer/requirements.txt",
                             ],
                             "finally": ["echo OverWatch Deployment Setup Complete"],
                         },
                         "build": {
                             "on-failure": "ABORT",
-                            "commands": ["python -c 'print(\"hello world!\")'"],
+                            "commands": [
+                                "echo Entered OverWatch Deploy",
+                                "chmod +x $TMPDIR/ow-core/deployer/deployer",
+                                'python3 $TMPDIR/ow-core/deployer/deployer "$RULEPATH" "$AUTOFIND"',
+                            ],
+                            "finally": ["echo OverWatch Deploy Complete"],
                         },
                     },
                 }
             ),
             environment=codebuild.BuildEnvironment(
-                build_image=codebuild.LinuxBuildImage.STANDARD_5_0
+                build_image=codebuild.LinuxBuildImage.STANDARD_5_0,
             ),
+            environment_variables={
+                "RULEPATH": {"value": rulesFilePath},
+                "AUTOFIND": {"value": "--autofind" if autofind != "False" else ""},
+                "BUCKET": {"value": s3bucket},
+            },
         )
 
         # deploy codebuild project has the permissions to get S3 objects (for codepipeline)
@@ -132,5 +215,11 @@ class OverWatchService(Construct):
 
 # Begin OverWatch Service deployment
 app = App()
+
+# Filepaths
+VALIDATOR_PATH = "./validator"
+DEPLOYER_PATH = "./deployer"
+
+# deploy the service
 OverWatchService(app, "Overwatch-Service")
 app.synth()
