@@ -3,6 +3,8 @@
         AlarmName: alarmnamestring
         ComparisonOperator: GreaterThanThreshold
         EvaluationPeriods: 123
+        MetricName: sstring
+        Namespace: asdasda
     Metric:
         filterName: FilterName
         filterPattern: FilterPattern
@@ -15,6 +17,8 @@
         AlarmName: alarmnamestring
         ComparisonOperator: GreaterThanThreshold
         EvaluationPeriods: 123
+        MetricName: sstring
+        Namespace: asdasda
     Metric:
         filterName: FilterName
         filterPattern: FilterPattern
