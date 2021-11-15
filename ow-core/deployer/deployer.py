@@ -59,13 +59,13 @@ class OverwatchDeployer:
                 except Exception as err:
                     exit(1)
 
-                metric_fields={
+                metric_fields_template={
                     "filterName":"",
                     "filterPattern":"",
                     "logGroupName":"",
                     "metricTransformations":"",
                 }
-                alarm_fields={
+                alarm_fields_template={
                     "ActionsEnabled":"",
                     "AlarmActions":"",
                     "AlarmDescription":"",
@@ -93,6 +93,7 @@ class OverwatchDeployer:
                 # print(default_rule['Metric'])
                 # create metric filters for all alarms
                 for current_rule in current_rules:
+                    metric_fields = metric_fields_template
                     for field, value in list(metric_fields.items()):
                         if field in current_rule['Metric']:
                             metric_fields[field] = current_rule['Metric'][field]
@@ -112,6 +113,7 @@ class OverwatchDeployer:
 
                 # deploy alarms
                 for current_rule in current_rules:
+                    alarm_fields = alarm_fields_template
                     for field, value in list(alarm_fields.items()):
                         if field in current_rule['Alarm']:
                             alarm_fields[field] = current_rule['Alarm'][field]
