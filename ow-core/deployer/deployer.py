@@ -3,8 +3,8 @@ import yaml
 import os
 import argparse
 
-cloudwatch=boto3.client('cloudwatch')
-logs=boto3.client('logs')
+cloudwatch = boto3.client("cloudwatch")
+logs = boto3.client("logs")
 
 # Arguments Engine
 parser = argparse.ArgumentParser(description="OverWatch Rules Validator")
@@ -31,8 +31,12 @@ DEFAULT_PATH = "ow-core/deployer/internal/default.yaml"
 
 class OverwatchDeployer:
     def __init__(self, rules_dir_path, autofind):
-        self.rules_dir_path = str(self.find(rules_dir_path, os.path.abspath(os.curdir))) if autofind else rules_dir_path
-        self.rules_dir_path += '/' # to make it proper filepath
+        self.rules_dir_path = (
+            str(self.find(rules_dir_path, os.path.abspath(os.curdir)))
+            if autofind
+            else rules_dir_path
+        )
+        self.rules_dir_path += "/"  # to make it proper filepath
         self.rules = []
 
     # Taken from: https://stackoverflow.com/questions/1724693/find-a-file-in-python
@@ -50,7 +54,9 @@ class OverwatchDeployer:
 
     def deploy_rules(self):
         for rule in self.rules:
-            with open(self.rules_dir_path + rule, "r") as stream, open(DEFAULT_PATH, "r") as default:
+            with open(self.rules_dir_path + rule, "r") as stream, open(
+                DEFAULT_PATH, "r"
+            ) as default:
                 try:
                     current_rules = yaml.safe_load(stream)
                     default_rule = yaml.safe_load(default)
@@ -59,35 +65,35 @@ class OverwatchDeployer:
                 except Exception as err:
                     exit(1)
 
-                metric_fields_template={
-                    "filterName":"",
-                    "filterPattern":"",
-                    "logGroupName":"",
-                    "metricTransformations":"",
+                metric_fields_template = {
+                    "filterName": "",
+                    "filterPattern": "",
+                    "logGroupName": "",
+                    "metricTransformations": "",
                 }
-                alarm_fields_template={
-                    "ActionsEnabled":"",
-                    "AlarmActions":"",
-                    "AlarmDescription":"",
-                    "AlarmName":"",
-                    "ComparisonOperator":"",
-                    "DatapointsToAlarm":"",
-                    "Dimensions":"",
-                    "EvaluateLowSampleCountPercentile":"",
-                    "EvaluationPeriods":"",
-                    "ExtendedStatistic":"",
-                    "InsufficientDataActions":"",
-                    "MetricName":"",
-                    "Metrics":"",
-                    "Namespace":"",
-                    "OKActions":"",
-                    "Period":"",
-                    "Statistic":"",
-                    "Tags":"",
-                    "Threshold":"",
-                    "ThresholdMetricId":"",
-                    "TreatMissingData":"",
-                    "Unit":"",
+                alarm_fields_template = {
+                    "ActionsEnabled": "",
+                    "AlarmActions": "",
+                    "AlarmDescription": "",
+                    "AlarmName": "",
+                    "ComparisonOperator": "",
+                    "DatapointsToAlarm": "",
+                    "Dimensions": "",
+                    "EvaluateLowSampleCountPercentile": "",
+                    "EvaluationPeriods": "",
+                    "ExtendedStatistic": "",
+                    "InsufficientDataActions": "",
+                    "MetricName": "",
+                    "Metrics": "",
+                    "Namespace": "",
+                    "OKActions": "",
+                    "Period": "",
+                    "Statistic": "",
+                    "Tags": "",
+                    "Threshold": "",
+                    "ThresholdMetricId": "",
+                    "TreatMissingData": "",
+                    "Unit": "",
                 }
 
                 # print(default_rule['Metric'])
@@ -95,10 +101,10 @@ class OverwatchDeployer:
                 for current_rule in current_rules:
                     metric_fields = metric_fields_template
                     for field, value in list(metric_fields.items()):
-                        if field in current_rule['Metric']:
-                            metric_fields[field] = current_rule['Metric'][field]
+                        if field in current_rule["Metric"]:
+                            metric_fields[field] = current_rule["Metric"][field]
                         else:
-                            metric_fields[field] = default_rule['Metric'][field]
+                            metric_fields[field] = default_rule["Metric"][field]
                             if metric_fields[field] == "" or metric_fields[field] == []:
                                 del metric_fields[field]
 
@@ -116,14 +122,18 @@ class OverwatchDeployer:
                 for current_rule in current_rules:
                     alarm_fields = alarm_fields_template
                     for field, value in list(alarm_fields.items()):
-                        if field in current_rule['Alarm']:
-                            alarm_fields[field] = current_rule['Alarm'][field]
+                        if field in current_rule["Alarm"]:
+                            alarm_fields[field] = current_rule["Alarm"][field]
                         else:
-                            alarm_fields[field] = default_rule['Alarm'][field]
+                            alarm_fields[field] = default_rule["Alarm"][field]
                             if alarm_fields["MetricName"] == "":
-                                alarm_fields["MetricName"] = metric_fields["metricTransformations"][0]["metricName"]
+                                alarm_fields["MetricName"] = metric_fields[
+                                    "metricTransformations"
+                                ][0]["metricName"]
                             if alarm_fields["Namespace"] == "":
-                                alarm_fields["Namespace"] = metric_fields["metricTransformations"][0]["metricNamespace"]
+                                alarm_fields["Namespace"] = metric_fields[
+                                    "metricTransformations"
+                                ][0]["metricNamespace"]
                             elif alarm_fields[field] == "" or alarm_fields[field] == []:
                                 del alarm_fields[field]
 
@@ -140,7 +150,8 @@ class OverwatchDeployer:
     def deploy(self):
         self.load_rules()
         self.deploy_rules()
-    
+
+
 if __name__ == "__main__":
     # parse the arguments
     args = parser.parse_args()
