@@ -7,103 +7,112 @@ import argparse
 # Arguments Engine
 parser = argparse.ArgumentParser(description="OverWatch Rules Validator")
 parser.add_argument(
-    "rules_path",
+    "rules_folder_path",
     metavar="path",
     type=str,
     nargs="?",
-    default="rules.yaml",
-    help='Path to rules yaml | fileName of rules yaml file if autofind flag is set | Default: "rules.yaml"',
+    default="rules",
+    help='Path to rules folder | dirName of rules folder if autofind flag is set | Default: "rules"',
 )
 parser.add_argument(
     "--autofind",
     dest="autofind",
     action="store_true",
-    help="Enables autofinding of filename in <rules_path>",
+    help="Enables autofinding of <rules_folder_path> directory within project",
 )
 
 # Path to Schema
-SCHEMA_PATH = "ow-core/validator/schema.yaml"
+SCHEMA_PATH = "ow-core/validator/internal/schema.yaml"
 
 # Custom Exception Handling for smoother debugging
 class DuplicateNameException(Exception):
     def __init__(self, message):
         super().__init__(message)
 
+class ValidationException(Exception):
+    def __init__(self, message):
+        super().__init__(message)
 
 class OverwatchValidator:
-    def __init__(self, rule_path, autofind):
-        self.rule_path = rule_path
-        self.autofind = autofind
+    def __init__(self, rules_dir_path, autofind):
+        self.rules_dir_path = str(self.find(rules_dir_path, os.path.abspath(os.curdir))) if autofind else rules_dir_path
+        self.rules_dir_path += '/' # to make it proper filepath
+        self.rules = []
 
     # Taken from: https://stackoverflow.com/questions/1724693/find-a-file-in-python
-    # Used to find path of 'rules.yaml' file in the root of user's project directory.
-    # Intelligently does this (no hardocded paths), thus, it does not matter whether user is on Windows or Linux
+    # Finds rules folder depending on folder name provided
     def find(self, name, path):
         for root, dirs, files in os.walk(path):
-            if name in files:
+            if name in dirs:
                 return os.path.join(root, name)
 
     def load_rules(self):
-        filepath = (
-            str(self.find(self.rule_path, os.path.abspath(os.curdir)))
-            if self.autofind
-            else self.rule_path
-        )
-        with open(filepath) as f:
-            rules = yaml.load(f, Loader=yaml.FullLoader)
-        return json.dumps(rules)
+        for filename in os.listdir(self.rules_dir_path):
+            if filename.endswith(".yaml"):
+                with open(self.rules_dir_path + filename) as f:
+                    self.rules.append((filename, json.dumps(yaml.load(f, Loader=yaml.FullLoader))))
+        print(f"Loaded {', '.join(n[0] for n in self.rules)}")
 
     def validate_rules_structure(self):
         with open(SCHEMA_PATH) as f:
             schema = yaml.load(f, Loader=yaml.FullLoader)
-            try:
-                rules = self.load_rules()
-                cleaned_rules = json.loads(rules)
-                jsonschema.validate(instance=cleaned_rules[0], schema=schema)
-            except (jsonschema.ValidationError, KeyError) as error:
-                return False, "Invalid Rules File"
-            return True, "Valid Rules File"
+            for filename, rule in self.rules:
+                try:
+                    cleaned_rule = json.loads(rule)
+                    jsonschema.validate(instance=cleaned_rule[0], schema=schema)
+                except (jsonschema.ValidationError, KeyError) as error:
+                    return False, f"Invalid Rules File - {filename}"
+            return True, "All Rules Files Valid"
 
     def validate_alarm_attributes(self):
-        rules = self.load_rules()
-        cleaned_rules = json.loads(rules)
         alarmNames = []
-        for rule in cleaned_rules:
-            if rule["Alarm"]["AlarmName"] not in alarmNames:
-                alarmNames.append(rule["Alarm"]["AlarmName"])
-            else:
-                raise DuplicateNameException("AlarmName must be unique.")
+        for filename, rule in self.rules:
+            cleaned_rules = json.loads(rule)
+            for clean_rule in cleaned_rules:
+                try:
+                    if clean_rule["Alarm"]["AlarmName"] not in alarmNames:
+                        alarmNames.append(clean_rule["Alarm"]["AlarmName"])
+                    else:
+                        raise DuplicateNameException(f"AlarmName must be unique. Conflict with '{clean_rule['Alarm']['AlarmName']}' in '{filename}'")
+                except Exception as err:
+                    raise ValidationException(f"'{filename}' is an Invalid Rules File - err: {err}")
+
         return alarmNames
+
     def validate_metric_attributes(self):
-        rules = self.load_rules()
-        cleaned_rules = json.loads(rules)
         metricNames = []
-        for rule in cleaned_rules:
-            if rule["Metric"]["filterName"] not in metricNames:
-                metricNames.append(rule["Metric"]["filterName"])
-            else:
-                raise DuplicateNameException("filterName must be unique.")
+        for filename, rule in self.rules:
+            cleaned_rules = json.loads(rule)
+            for clean_rule in cleaned_rules:
+                try:
+                    if clean_rule["Metric"]["filterName"] not in metricNames:
+                        metricNames.append(clean_rule["Metric"]["filterName"])
+                    else:
+                        raise DuplicateNameException(f"filterName must be unique. Conflict with '{clean_rule['Metric']['filterName']}' in '{filename}'")
+                except Exception as err:
+                    raise ValidationException(f"'{filename}' is an Invalid Rules File - err: {err}")
         return metricNames
     # get_local_alarm_names and get_local_metric_names are simply helper functions for developers
     # these two functions are NOT used in validation step
     def get_local_alarm_names(self):
         result = []
-        rules = self.load_rules()
-        cleaned_rules = json.loads(rules)
-        for rule in cleaned_rules:
-            result.append(rule["Metric"]["filterName"])
+        for filename, rule in self.rules:
+            cleaned_rules = json.loads(rule)
+            for clean_rule in cleaned_rules:
+                result.append(clean_rule["Metric"]["filterName"])
         return result
 
     def get_local_metric_names(self):
         result = []
-        rules = self.load_rules()
-        cleaned_rules = json.loads(rules)
-        for rule in cleaned_rules:
-            result.append(rule["Alarm"]["AlarmName"])
+        for filename, rule in self.rules:
+            cleaned_rules = json.loads(rule)
+            for clean_rule in cleaned_rules:
+                result.append(clean_rule["Alarm"]["AlarmName"])
         return result
 
     def validate(self):
         # Any other functions that are apart of the validation process add it here
+        self.load_rules()
         self.validate_alarm_attributes()
         self.validate_metric_attributes()
         is_valid, msg = self.validate_rules_structure()
@@ -119,6 +128,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # validator class instance
-    validator = OverwatchValidator(args.rules_path, args.autofind)
+    validator = OverwatchValidator(args.rules_folder_path, args.autofind)
     # if path given, attempt to validate
     validator.validate()

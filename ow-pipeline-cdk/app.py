@@ -15,11 +15,11 @@ class OverWatchInfraStack(Stack):
         super().__init__(scope, id, **kwargs)
 
         # parse any arguments
-        rulesFilePath = CfnParameter(
+        rulesDirPath = CfnParameter(
             self,
-            "rulesFilePath",
-            default="rules.yaml",
-            description="Filepath or Filename of rules yaml file | Default 'rules.yaml'",
+            "rulesDirPath",
+            default="rules",
+            description="Path to rules folder | dirName of rules folder if autofind flag is set | Default: 'rules'",
         ).value_as_string
         autofind = CfnParameter(
             self,
@@ -58,11 +58,11 @@ class OverWatchValidateStack(Stack):
         super().__init__(scope, id, **kwargs)
 
         # parse any arguments
-        rulesFilePath = CfnParameter(
+        rulesDirPath = CfnParameter(
             self,
-            "rulesFilePath",
-            default="rules.yaml",
-            description="Filepath or Filename of rules yaml file | Default 'rules.yaml'",
+            "rulesDirPath",
+            default="rules",
+            description="Path to rules folder | dirName of rules folder if autofind flag is set | Default: 'rules'",
         ).value_as_string
         autofind = CfnParameter(
             self,
@@ -99,8 +99,8 @@ class OverWatchValidateStack(Stack):
                             "on-failure": "ABORT",
                             "commands": [
                                 "echo Entered OverWatch Validate",
-                                "chmod +x $TMPDIR/ow-core/validator/validator",
-                                'python3 $TMPDIR/ow-core/validator/validator "$RULEPATH" "$AUTOFIND"',
+                                "chmod +x $TMPDIR/ow-core/validator/validator.py",
+                                'python3 $TMPDIR/ow-core/validator/validator.py "$RULEPATH" "$AUTOFIND"',
                             ],
                             "finally": ["echo OverWatch Validate Complete"],
                         },
@@ -111,7 +111,7 @@ class OverWatchValidateStack(Stack):
                 build_image=codebuild.LinuxBuildImage.STANDARD_5_0,
             ),
             environment_variables={
-                "RULEPATH": {"value": rulesFilePath},
+                "RULEPATH": {"value": rulesDirPath},
                 "AUTOFIND": {"value": "--autofind" if autofind != "False" else ""},
                 "BUCKET": {"value": s3bucket},
             },
@@ -130,11 +130,11 @@ class OverWatchDeployStack(Stack):
         super().__init__(scope, id, **kwargs)
 
         # parse any arguments
-        rulesFilePath = CfnParameter(
+        rulesDirPath = CfnParameter(
             self,
-            "rulesFilePath",
-            default="rules.yaml",
-            description="Filepath or Filename of rules yaml file | Default 'rules.yaml'",
+            "rulesDirPath",
+            default="rules",
+            description="Path to rules folder | dirName of rules folder if autofind flag is set | Default: 'rules'",
         ).value_as_string
         autofind = CfnParameter(
             self,
@@ -171,8 +171,8 @@ class OverWatchDeployStack(Stack):
                             "on-failure": "ABORT",
                             "commands": [
                                 "echo Entered OverWatch Deploy",
-                                "chmod +x $TMPDIR/ow-core/deployer/deployer",
-                                'python3 $TMPDIR/ow-core/deployer/deployer "$RULEPATH" "$AUTOFIND"',
+                                "chmod +x $TMPDIR/ow-core/deployer/deployer.py",
+                                'python3 $TMPDIR/ow-core/deployer/deployer.py "$RULEPATH" "$AUTOFIND"',
                             ],
                             "finally": ["echo OverWatch Deploy Complete"],
                         },
@@ -183,7 +183,7 @@ class OverWatchDeployStack(Stack):
                 build_image=codebuild.LinuxBuildImage.STANDARD_5_0,
             ),
             environment_variables={
-                "RULEPATH": {"value": rulesFilePath},
+                "RULEPATH": {"value": rulesDirPath},
                 "AUTOFIND": {"value": "--autofind" if autofind != "False" else ""},
                 "BUCKET": {"value": s3bucket},
             },
