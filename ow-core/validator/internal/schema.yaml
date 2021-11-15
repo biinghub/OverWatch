@@ -729,6 +729,8 @@ properties:
         - AlarmName
         - EvaluationPeriods
         - ComparisonOperator
+        - MetricName
+        - Namespace
         title: The Alarm schema
         type: object
     Metric:

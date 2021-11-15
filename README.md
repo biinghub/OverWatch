@@ -1,8 +1,8 @@
 # cs9447-project
 
 ## example
-`./validator example/rules.yaml`
+`./validator example`
 
-`cdk deploy --all --parameters enableAutofind=True --no-previous-parameters`
+`cdk deploy --all --parameters rules_folder_path=example enableAutofind=True --no-previous-parameters`
 
 `cdk deploy --all --parameters enableAutofind=True`
