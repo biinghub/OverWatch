@@ -1,0 +1,120 @@
+Metric:
+    # [REQUIRED] A name for the metric filter.
+    filterName: ""
+
+    # [REQUIRED] A filter pattern for extracting metric data out of ingested log events.
+    filterPattern: ""
+
+    # [REQUIRED] The name of the log group.
+    logGroupName: ""
+
+    # [REQUIRED] A collection of information that defines how metric data gets emitted.
+    metricTransformations: 
+        # [REQUIRED] The name of the CloudWatch metric.
+        metricName: ""
+
+        # [REQUIRED] A custom namespace to contain your metric in CloudWatch. Use namespaces to group together metrics that are similar.
+        metricNamespace: ""
+
+        # [REQUIRED] The value to publish to the CloudWatch metric when a filter pattern matches a log event.
+        metricValue: ""
+        
+        # [OPTIONAL] The value to emit when a filter pattern does not match a log event. This value can be null.
+        defaultValue: ""
+
+        # [OPTIONAL] The fields to use as dimensions for the metric. One metric filter can include as many as three dimensions.
+        dimensions: ""
+
+        # [OPTIONAL] The unit to assign to the metric. If you omit this, the unit is set as None.
+        unit: Count
+        
+
+Alarm:
+    # [REQUIRED] The name for the alarm. This name must be unique within the Region.
+    AlarmName: ""
+
+    # [REQUIRED] The number of periods over which data is compared to the specified threshold. 
+    # If you are setting an alarm that requires that a number of consecutive data points be breaching to trigger the alarm, this value specifies that number. If you are setting an "M out of N" alarm, this value is the N.
+    EvaluationPeriods: 1
+
+    # [REQUIRED] The arithmetic operation to use when comparing the specified statistic and threshold. The specified statistic value is used as the first operand.
+    ComparisonOperator: ""
+
+    # [OPTIONAL] The name for the metric associated with the alarm. For each PutMetricAlarm operation, you must specify either MetricName or a Metrics array.
+    # If you are creating an alarm based on a math expression, you cannot specify this parameter, or any of the Dimensions , Period , Namespace , Statistic , or ExtendedStatistic parameters.
+    # Instead, you specify all this information in the Metrics array.
+    MetricName: ""
+
+    # [OPTIONAL] Indicates whether actions should be executed during any changes to the alarm state. The default is TRUE.
+    ActionsEnabled: True
+
+    # [OPTIONAL]
+    # The actions to execute when this alarm transitions to the ALARM state from any other state. Each action is specified as an Amazon Resource Name (ARN).
+    AlarmActions: [
+    ]
+
+    # [OPTIONAL] The description for the alarm.
+    AlarmDescription: Alarm when a threshold is breached.
+
+    # [OPTIONAL]
+    # The actions to execute when this alarm transitions to an OK state from any other state. Each action is specified as an Amazon Resource Name (ARN).
+    OKActions: [
+    ]
+
+    # [OPTIONAL] The actions to execute when this alarm transitions to the INSUFFICIENT_DATA state from any other state. Each action is specified as an Amazon Resource Name (ARN).
+    InsufficientDataActions: [
+    ]
+
+    # [OPTIONAL] The namespace for the metric associated specified in MetricName.
+    Namespace: ""
+
+    # [OPTIONAL] The statistic for the metric specified in MetricName , other than percentile. For percentile statistics, use ExtendedStatistic.
+    # When you call PutMetricAlarm and specify a MetricName , you must specify either Statistic or ExtendedStatistic, but not both.
+    Statistic: Sum
+
+    # [OPTIONAL] The percentile statistic for the metric specified in MetricName . Specify a value between p0.0 and p100.
+    ExtendedStatistic: ""
+
+    # [OPTIONAL] The dimensions for the metric specified in MetricName.
+    Dimensions: [
+        
+            # [REQUIRED] The name of the dimension. Dimension names must contain only ASCII characters and must include at least one non-whitespace character.
+            
+            # [REQUIRED] The value of the dimension. Dimension values must contain only ASCII characters and must include at least one non-whitespace character.
+            
+        
+    ]
+
+    # [OPTIONAL] The length, in seconds, used each time the metric specified in MetricName is evaluated. Valid values are 10, 30, and any multiple of 60.
+    Period: ""
+
+    # [OPTIONAL] The unit of measure for the statistic. For example, the units for the Amazon EC2 NetworkIn metric are Bytes because NetworkIn tracks the number of bytes that an instance receives on all network interfaces.
+    Unit: ""
+
+    # [OPTIONAL] The number of data points that must be breaching to trigger the alarm. This is used only if you are setting an "M out of N" alarm. In that case, this value is the M.
+    DatapointsToAlarm: 0
+
+    # [OPTIONAL] The value against which the specified statistic is compared.
+    # This parameter is required for alarms based on static thresholds, but should not be used for alarms based on anomaly detection models.
+    Threshold: ""
+
+    # [OPTIONAL] Sets how this alarm is to handle missing data points. If TreatMissingData is omitted, the default behavior of missing is used.
+    TreatMissingData: ""
+
+    # [OPTIONAL] Used only for alarms based on percentiles. If you specify ignore , the alarm state does not change during periods with too few data points to be statistically significant.
+    #If you specify evaluate or omit this parameter, the alarm is always evaluated and possibly changes state no matter how many data points are available.
+    EvaluateLowSampleCountPercentile: ""
+
+    # [OPTIONAL]
+    Metrics: [
+        
+    ]
+
+    # [OPTIONAL] A list of key-value pairs to associate with the metric stream. You can associate as many as 50 tags with a metric stream.
+    # Tags can help you organize and categorize your resources. You can also use them to scope user permissions by granting a user permission to access or change only resources with certain tag values.
+    Tags: [
+
+    ]
+
+    # [OPTIONAL] If this is an alarm based on an anomaly detection model, make this value match the ID of the ANOMALY_DETECTION_BAND function.
+    ThresholdMetricId: ""

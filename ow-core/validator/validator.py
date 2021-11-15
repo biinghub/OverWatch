@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 import jsonschema
 import yaml
 import json
