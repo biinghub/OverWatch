@@ -29,14 +29,14 @@ class ValidationTestCases(unittest.TestCase):
         #defined in schema.yaml
         #therefore, the assertion proves that the validate rules structure function works
         #by raising exception
-        assert v3.validate_rules_structure() == (False, "Invalid Rules File - more_bad_rule.yaml")
+        assert v3.validate_rules_structure() == (False, "Invalid Rules File - more_bad_rule.yaml - Schema Error")
 
     def test_validate_alarm_attributes_works(self):
         v2 = validator.OverwatchValidator('ow-core/example/', False)
         v2.load_rules()
         #rules.yaml only has 1 alarm name, called alarmnamestring
         #assertion shows the function works in grabbing these attribtues
-        assert v2.validate_alarm_attributes() == ['alarmnamestring', 'simple-rule']
+        assert v2.validate_alarm_attributes() == ['simple-rule', 'simple-rule2']
 
     def test_validate_alarm_attributes_exception(self):
         v2 = validator.OverwatchValidator('ow-core/validator/tests/test2', False)
@@ -51,7 +51,7 @@ class ValidationTestCases(unittest.TestCase):
         v2.load_rules()
         #rules.yaml only has 1 alarm name, called alarmnamestring
         #assertion shows the function works in grabbing these attribtues
-        assert v2.validate_metric_attributes() == ['FilterName', 'simple-filter']
+        assert v2.validate_metric_attributes() == ['simple-filter', 'simple-filter2']
 
     def test_validate_metric_attributes_exception(self):
         v2 = validator.OverwatchValidator('ow-core/validator/tests/test2', False)
