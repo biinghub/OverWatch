@@ -1,17 +1,20 @@
-Alarm:
-    AlarmName: simple-rule
-    ComparisonOperator: GreaterThanThreshold
-    EvaluationPeriods: 10
-    DatapointsToAlarm: 10
-    Statistic: Sum
-    Threshold: 5
-    Period: 10
-Metric:
-    filterName: simple-filter
-    filterPattern: CRITICAL simple
-    logGroupName: /var/log/OverWatch
-    metricTransformations:
-    -   metricName: simple-metric
-        metricNamespace: simple
-        metricValue: "1"
-        unit: Count
+---
+-   Alarm:
+        AlarmName: simple-rule
+        ComparisonOperator: GreaterThanThreshold
+        EvaluationPeriods: 10
+        DatapointsToAlarm: 10
+        Statistic: Sum
+        Threshold: 5
+        Period: 10
+        MetricName: sstring
+        Namespace: asdasda
+    Metric:
+        filterName: simple-filter
+        filterPattern: CRITICAL simple
+        logGroupName: /var/log/OverWatch
+        metricTransformations:
+        -   metricName: simple-metric
+            metricNamespace: simple
+            metricValue: "1"
+            unit: Count

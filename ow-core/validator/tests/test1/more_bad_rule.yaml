@@ -1,0 +1,6 @@
+---
+-   Alarm:
+        AlarmName: alarmnamestring
+    Metric:
+        filterName: FilterName
+        filterPattern: 
