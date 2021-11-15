@@ -193,6 +193,19 @@ class OverWatchDeployStack(Stack):
         # artifact store s3 bucket access
         deploy.add_to_role_policy(artifactStack.artifactBucketAccessPolicy)
 
+        # deploy also needs access to create, delete and modify metric filters and alarms
+        # Needs accesss to all resources since it's impossible to limit to very specific ARNS (not yet created)
+        deployRulesAccessPolicy = iam.PolicyStatement(
+            actions=[
+                "cloudwatch:PutCompositeAlarm",
+                "cloudwatch:PutMetricAlarm",
+                "logs:PutMetricFilter",
+            ],
+            resources=["*"],
+            sid="overwatchDeployRulesCloudWatchAccessPolicy",
+        )
+        deploy.add_to_role_policy(deployRulesAccessPolicy)
+
 
 # OW Application
 class OverWatchService(Construct):

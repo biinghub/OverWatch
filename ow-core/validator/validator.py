@@ -29,14 +29,20 @@ class DuplicateNameException(Exception):
     def __init__(self, message):
         super().__init__(message)
 
+
 class ValidationException(Exception):
     def __init__(self, message):
         super().__init__(message)
 
+
 class OverwatchValidator:
     def __init__(self, rules_dir_path, autofind):
-        self.rules_dir_path = str(self.find(rules_dir_path, os.path.abspath(os.curdir))) if autofind else rules_dir_path
-        self.rules_dir_path += '/' # to make it proper filepath
+        self.rules_dir_path = (
+            str(self.find(rules_dir_path, os.path.abspath(os.curdir)))
+            if autofind
+            else rules_dir_path
+        )
+        self.rules_dir_path += "/"  # to make it proper filepath
         self.rules = []
 
     # Taken from: https://stackoverflow.com/questions/1724693/find-a-file-in-python
@@ -50,18 +56,22 @@ class OverwatchValidator:
         for filename in os.listdir(self.rules_dir_path):
             if filename.endswith(".yaml"):
                 with open(self.rules_dir_path + filename) as f:
-                    self.rules.append((filename, json.dumps(yaml.load(f, Loader=yaml.FullLoader))))
+                    self.rules.append(
+                        (filename, json.dumps(yaml.load(f, Loader=yaml.FullLoader)))
+                    )
         print(f"Loaded {', '.join(n[0] for n in self.rules)}")
 
     def validate_rules_structure(self):
         with open(SCHEMA_PATH) as f:
             schema = yaml.load(f, Loader=yaml.FullLoader)
-            for filename, rule in self.rules:
+            for filename, rule_bundle in self.rules:
                 try:
-                    cleaned_rule = json.loads(rule)
-                    jsonschema.validate(instance=cleaned_rule[0], schema=schema)
+                    cleaned_rules = json.loads(rule_bundle)
+                    for cleaned_rule in cleaned_rules:
+                        jsonschema.validate(instance=cleaned_rule, schema=schema)
                 except (jsonschema.ValidationError, KeyError) as error:
-                    return False, f"Invalid Rules File - {filename}"
+                    print(error)
+                    return False, f"Invalid Rules File - {filename} - Schema Error"
             return True, "All Rules Files Valid"
 
     def validate_alarm_attributes(self):
@@ -73,9 +83,13 @@ class OverwatchValidator:
                     if clean_rule["Alarm"]["AlarmName"] not in alarmNames:
                         alarmNames.append(clean_rule["Alarm"]["AlarmName"])
                     else:
-                        raise DuplicateNameException(f"AlarmName must be unique. Conflict with '{clean_rule['Alarm']['AlarmName']}' in '{filename}'")
+                        raise DuplicateNameException(
+                            f"AlarmName must be unique. Conflict with '{clean_rule['Alarm']['AlarmName']}' in '{filename}'"
+                        )
                 except Exception as err:
-                    raise ValidationException(f"'{filename}' is an Invalid Rules File - err: {err}")
+                    raise ValidationException(
+                        f"'{filename}' is an Invalid Rules File - err: {err}"
+                    )
 
         return alarmNames
 
@@ -88,10 +102,15 @@ class OverwatchValidator:
                     if clean_rule["Metric"]["filterName"] not in metricNames:
                         metricNames.append(clean_rule["Metric"]["filterName"])
                     else:
-                        raise DuplicateNameException(f"filterName must be unique. Conflict with '{clean_rule['Metric']['filterName']}' in '{filename}'")
+                        raise DuplicateNameException(
+                            f"filterName must be unique. Conflict with '{clean_rule['Metric']['filterName']}' in '{filename}'"
+                        )
                 except Exception as err:
-                    raise ValidationException(f"'{filename}' is an Invalid Rules File - err: {err}")
+                    raise ValidationException(
+                        f"'{filename}' is an Invalid Rules File - err: {err}"
+                    )
         return metricNames
+
     # get_local_alarm_names and get_local_metric_names are simply helper functions for developers
     # these two functions are NOT used in validation step
     def get_local_alarm_names(self):

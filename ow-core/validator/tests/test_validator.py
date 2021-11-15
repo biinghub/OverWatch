@@ -4,6 +4,7 @@ from validator.validator import DuplicateNameException
 from validator.validator import ValidationException
 import unittest
 
+
 class ValidationTestCases(unittest.TestCase):
     def test_set_rules(self):
         #The test ensures argument parsing for rule declaration works
@@ -60,5 +61,6 @@ class ValidationTestCases(unittest.TestCase):
         with self.assertRaises(ValidationException):
             v2.validate_metric_attributes()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
