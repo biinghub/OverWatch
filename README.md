@@ -3,6 +3,6 @@
 ## example
 `./validator example`
 
-`cdk deploy --all --parameters rules_folder_path=example enableAutofind=True --no-previous-parameters`
+`cdk deploy --all --parameters rulesDirPath=example enableAutofind=True --no-previous-parameters`
 
-`cdk deploy --all --parameters enableAutofind=True`
+`cdk deploy --all --parameters rulesDirPath=ow-core/example --no-previous-parameters`
