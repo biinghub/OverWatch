@@ -108,6 +108,7 @@ class OverwatchDeployer:
                         # Creating metric filter
                         logs.put_metric_filter(**metric_fields)
                     except Exception as err:
+                        print(err)
                         print("something went wrong creating metric filter")
                         exit(1)
 
@@ -132,6 +133,7 @@ class OverwatchDeployer:
                         # Creating CloudWatch Alarm
                         cloudwatch.put_metric_alarm(**alarm_fields)
                     except Exception as err:
+                        print(err)
                         print("something went wrong creating CloudWatch Alarm")
                         exit(1)
 
