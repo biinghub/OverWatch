@@ -56,12 +56,14 @@ class OverwatchValidator:
     def validate_rules_structure(self):
         with open(SCHEMA_PATH) as f:
             schema = yaml.load(f, Loader=yaml.FullLoader)
-            for filename, rule in self.rules:
+            for filename, rule_bundle in self.rules:
                 try:
-                    cleaned_rule = json.loads(rule)
-                    jsonschema.validate(instance=cleaned_rule[0], schema=schema)
+                    cleaned_rules = json.loads(rule_bundle)
+                    for cleaned_rule in cleaned_rules:
+                        jsonschema.validate(instance=cleaned_rule, schema=schema)
                 except (jsonschema.ValidationError, KeyError) as error:
-                    return False, f"Invalid Rules File - {filename}"
+                    print(error)
+                    return False, f"Invalid Rules File - {filename} - Schema Error"
             return True, "All Rules Files Valid"
 
     def validate_alarm_attributes(self):
