@@ -1,49 +1,70 @@
-"""
-Developer/User will call the monitor event function and input the types of actions being performed.
-severity:   - how important this action may be to security of the company
-            - could be classified as critical, major, minor, etc... This could affect how sensitive our rules/alerts may
-                need to be. However we need to identify a set of criteria for our priority matrix.
-event:      - Define what behaviour it is. It could be a user event or machine event.
-                ie. User makes a database query -> user_event.
-                    Service account/m2m account performs a certain action which the user did not specify it to do.
-                        (isn't limited to this but in general we are just looking to define different behaviours which could potentially 
-                            affect how our rules are formulated) 
-action:     - speaks for itself
-"""
+import boto3
+import time
+import enum
 
+# Deployment Instance requires these AWS permissions:
+# Logs:DescribeLogStreams
+# Logs: PutLogEvents
 
-def monitor_event(severity, event, tags):
-    # perform severity logic
-    if severity == "critical":
-        pass
-    elif severity == "major":
-        pass
-    elif severity == "minor":
-        pass
-    else:
-        pass
+DEFAULT_LOG_GROUP = "/var/log/Overwatch"
 
-    # perform severity logic
-    if event == "user_event":
-        pass
-    elif event == "machine_event":
-        pass
-    else:
-        pass
+# Currently supported priority levels (customisable to product needs)
+class Priority(enum.Enum):
+    CRITICAL = "CRITICAL"
+    MAJOR = "MAJOR"
+    MINOR = "MINOR"
+    INFO = "INFO"
+    DEBUG = "DEBUG"
 
-    # perform action logic
-    for tag in tags:
-        if tag == "database_query":
+class OverWatch_Logger:
+    def __init__(self, logGroup=DEFAULT_LOG_GROUP):
+        self.logGroup = logGroup
+        self.client = boto3.client('logs')
+
+        # create log group if not already existing
+        try:
+            self.client.create_log_group(logGroupName=self.logGroup)
+        except self.client.exceptions.ResourceAlreadyExistsException:
             pass
-        elif tag == "sensitive":
-            pass
-        elif tag == "PII":
-            pass
-        elif tag == "financial_data":
-            pass
-        else:
+    
+    def __send_log(self, priority: Priority, application: str, eventPrefix: str, message: str):
+        # create log stream if not already existing
+        logStream = f"{time.strftime('%Y-%m-%d')}-logstream"
+        try:
+            self.client.create_log_stream(logGroupName=self.logGroup, logStreamName=logStream)
+        except self.client.exceptions.ResourceAlreadyExistsException:
             pass
 
+        # https://stackoverflow.com/questions/30897897/python-boto-writing-to-aws-cloudwatch-logs-without-sequence-token/32947579
+        # Not going to reinvent the wheel here
+        log_stream_description = self.client.describe_log_streams(
+            logGroupName=self.logGroup,
+            logStreamNamePrefix=logStream
+        )
 
-def test_action():
-    print("action taken")
+        # generate event log
+        event_log = {
+            'logGroupName': self.logGroup,
+            'logStreamName': logStream,
+            'logEvents': [
+                {
+                    'timestamp': int(round(time.time() * 1000)),
+                    'message': f'{priority} - {application} - {eventPrefix} : {message}'
+                }
+            ],
+        }
+
+        # upload log (cursed sequence log bs done as well)
+        if 'uploadSequenceToken' in log_stream_description['logStreams'][0]:
+            event_log.update({'sequenceToken': log_stream_description['logStreams'][0]['uploadeSequenceToken']}) 
+
+        # actually upload to Cloudwatch
+        res = None
+        try:
+            res = self.client.put_log_events(**event_log)
+        except Exception as err:
+            print(err)
+
+    def monitor_event(self, priority: Priority, application: str, eventPrefix:str, message:str):
+        self.__send_log(priority, application, eventPrefix, message)
+
