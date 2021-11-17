@@ -172,7 +172,7 @@ class OverWatchDeployStack(Stack):
                             "commands": [
                                 "echo Entered OverWatch Deploy",
                                 "chmod +x $TMPDIR/ow-core/deployer/deployer.py",
-                                'python3 $TMPDIR/ow-core/deployer/deployer.py "$RULEPATH" "$AUTOFIND"',
+                                'python3 $TMPDIR/ow-core/deployer/deployer.py "$RULEPATH" --directory "$TMPDIR" "$AUTOFIND"',
                             ],
                             "finally": ["echo OverWatch Deploy Complete"],
                         },

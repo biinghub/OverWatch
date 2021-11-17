@@ -17,17 +17,18 @@ parser.add_argument(
     help='Path to rules folder | dirName of rules folder if autofind flag is set | Default: "rules"',
 )
 parser.add_argument(
+    "--directory",
+    type=str,
+    nargs="?",
+    default=".",
+    help='Path to OverWatch Core Application | Default "." or Current Directory',
+)
+parser.add_argument(
     "--autofind",
     dest="autofind",
     action="store_true",
     help="Enables autofinding of <rules_folder_path> directory within project",
 )
-
-# Path to Schema
-SCHEMA_PATH = "ow-core/deployer/internal/schema.yaml"
-# Path to Schema defaults
-DEFAULT_PATH = "ow-core/deployer/internal/default.yaml"
-
 
 class OverwatchDeployer:
     def __init__(self, rules_dir_path, autofind):
@@ -155,6 +156,11 @@ class OverwatchDeployer:
 if __name__ == "__main__":
     # parse the arguments
     args = parser.parse_args()
+
+    # Path to Schema
+    SCHEMA_PATH = f"{args.directory}/ow-core/deployer/internal/schema.yaml"
+    # Path to Schema defaults
+    DEFAULT_PATH = f"{args.directory}/ow-core/deployer/internal/default.yaml"
 
     # deployer class instance
     deployer = OverwatchDeployer(args.rules_folder_path, args.autofind)
