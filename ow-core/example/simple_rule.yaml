@@ -38,3 +38,26 @@
             metricNamespace: simple
             metricValue: "1"
             unit: Count
+ -   Alarm:
+        AlarmName: Abnormal-File-Uploaded
+        AlarmDescription: Abnormal User Behaviour: File Upload
+        ComparisonOperator: GreaterThanOrEqualToThreshold
+        EvaluationPeriods: 1
+        DatapointsToAlarm: 1
+        Statistic: Sum
+        Threshold: 1
+        Period: 11
+        MetricName: File Upload
+        Namespace: CRITICAL
+        ActionsEnabled: true
+        AlarmActions:
+        -  arn:aws:lambda:ap-southeast-2:200033815729:function:stopBeanstalk
+    Metric:
+        filterName: Abnormal-File-Upload-Filter
+        filterPattern: CRITICAL - OverWatch Demo Echo - FILE UPLOAD
+        logGroupName: /var/log/OverWatch
+        metricTransformations:
+        -   metricName: File Upload
+            metricNamespace: CRITICAL
+            metricValue: "1"
+            unit: Count
