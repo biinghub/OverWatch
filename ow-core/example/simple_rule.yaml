@@ -38,6 +38,7 @@
             metricNamespace: simple
             metricValue: "1"
             unit: Count
+            
  -   Alarm:
         AlarmName: Abnormal-File-Uploaded
         AlarmDescription: Abnormal User Behaviour: File Upload
