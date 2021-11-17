@@ -100,7 +100,7 @@ class OverWatchValidateStack(Stack):
                             "commands": [
                                 "echo Entered OverWatch Validate",
                                 "chmod +x $TMPDIR/ow-core/validator/validator.py",
-                                'python3 $TMPDIR/ow-core/validator/validator.py "$RULEPATH" "$AUTOFIND"',
+                                'python3 $TMPDIR/ow-core/validator/validator.py "$RULEPATH" --directory "$TMPDIR" "$AUTOFIND"',
                             ],
                             "finally": ["echo OverWatch Validate Complete"],
                         },

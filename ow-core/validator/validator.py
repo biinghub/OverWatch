@@ -15,14 +15,18 @@ parser.add_argument(
     help='Path to rules folder | dirName of rules folder if autofind flag is set | Default: "rules"',
 )
 parser.add_argument(
+    "--directory",
+    type=str,
+    nargs="?",
+    default=".",
+    help='Path to OverWatch Core Application | Default "." or Current Directory',
+)
+parser.add_argument(
     "--autofind",
     dest="autofind",
     action="store_true",
     help="Enables autofinding of <rules_folder_path> directory within project",
 )
-
-# Path to Schema
-SCHEMA_PATH = "ow-core/validator/internal/schema.yaml"
 
 # Custom Exception Handling for smoother debugging
 class DuplicateNameException(Exception):
@@ -146,6 +150,9 @@ if __name__ == "__main__":
     # parse the arguments
     args = parser.parse_args()
 
+    # Path to Schema
+    SCHEMA_PATH = f"{args.directory}/ow-core/validator/internal/schema.yaml"
+    
     # validator class instance
     validator = OverwatchValidator(args.rules_folder_path, args.autofind)
     # if path given, attempt to validate
