@@ -17,7 +17,7 @@ The easiest way to install the OverWatch Core software into your AWS account is 
 ```
 cdk deploy --all
 ```
-
+Some parameters to modify the CDK deployment are available on [ow-pipeline-cdk readme](ow-pipeline-cdk/README.md)
 
 ## example
 `./validator example`
