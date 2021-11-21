@@ -10,10 +10,33 @@ The robustly defined **YAML schema** is checked against user-defined rule config
 
 ## Usage
 ### Validator CLI
-insert usage by itself (not in cdk)
+If you are using the validator standalone, and have imported the `ow-core/validator` folder to your project directory, you can use the following CLI arguments:
+```
+python3 project/validator.py --autofind
+OR
+python3 project/validator.py path/to/rules/folder
+```
+Otherwise, it is recommended the validator is used with OverWatch.
 
 ### Testing your rule configuration files 
-insert usage of validator as a library 
+If you need to test validation on your rule configurations, you are free to use any python testing frameworks. However, `pytest` is recommended. 
+
+Import the validator into your testing script like so: 
+```python
+from validator import validator
+from validator.validator import DuplicateNameException
+from validator.validator import ValidationException
+```
+
+For each test, you may want to instatiate a validator object and check that your rules configuration files are valid like so: 
+``` python
+def test_validate():
+    #Second arg is set to false since we do not want autofind - we are testing a specific rule files
+    v = validator.OverwatchValidator('path/to/rules/folder', False)
+    v.load_rules()
+    #Provided your configuration files are correct
+    assert v.validate() == (True, "All Rule Files Valid")
+```
 
 ## FAQ
 #### Can the validator be used on its own? 
