@@ -40,7 +40,7 @@ See [ow-actions-cdk readme](ow-actions-cdk/README.md) for more specifics.
 ## OverWatch Validator
 [Link to OverWatch Validator README](ow-core/validator/README.md)
 
-## OverWatch Deployer
+## OverWatch Deployer (Rules Reference)
 [Link to OverWatch Deployer README](ow-core/Deployer/README.md)
 
 ## FAQ
