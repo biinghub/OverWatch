@@ -8,7 +8,7 @@ The deployer communicates with AWS Cloudwatch to create/modify Cloudwatch Alarms
 
 ## How does the OverWatch Deployer deploy rules?
 
-Specifically, it works with the put_metric_alarm() and put_metric_filter() from boto3 and translates fields from the rules into the Alarms and Metrics.
+Specifically, it works with the `put_metric_alarm` and `put_metric_filter` from `boto3` and translates fields from the rules into the Alarms and Metrics.
 
 ## Usage
 Team 3 **does not** recommend you use the deployer alone and as such will not provide usage documentation to prevent any shortcuts that will undermine the security of OverWatch. 
