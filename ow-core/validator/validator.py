@@ -3,6 +3,7 @@ import yaml
 import json
 import os
 import argparse
+
 """
 Arguments Engine - defining CLI parameters for customisability with validator script 
 i.e. python validator.py --autofind
@@ -29,10 +30,13 @@ parser.add_argument(
     action="store_true",
     help="Enables autofinding of <rules_folder_path> directory within project",
 )
+
+
 class DuplicateNameException(Exception):
     """
     DuplicateNameException - is raised when there are duplicate AlarmNames or filterNames in rules folder
     """
+
     def __init__(self, message):
         super().__init__(message)
 
@@ -41,26 +45,28 @@ class ValidationException(Exception):
     """
     ValidationException - is raised when there is a syntax or type issue with configurations in rules folder
     """
+
     def __init__(self, message):
         super().__init__(message)
 
 
 class OverwatchValidator:
     """
-    OverWatch Valitor Class - defined to make use of the validator more extensible and essentially be used as a 'microservice', 
+    OverWatch Valitor Class - defined to make use of the validator more extensible and essentially be used as a 'microservice',
     so people can use it in code and test scripts easily
     """
+
     def __init__(self, rules_dir_path, autofind):
         """
         Constructor - by default will the rules directory should be specified, otherwise the --autofind tag will search for a 'rules' folder and
-        assign it to attributes of Overwatch Validator class 
+        assign it to attributes of Overwatch Validator class
         """
         self.rules_dir_path = (
             str(self.find(rules_dir_path, os.path.abspath(os.curdir)))
             if autofind
             else rules_dir_path
         )
-        self.rules_dir_path += "/"  
+        self.rules_dir_path += "/"
         self.rules = []
 
     def find(self, name, path):
@@ -89,7 +95,7 @@ class OverwatchValidator:
     def validate_rules_structure(self):
         """
         Uses jsonschema pypi package to validate structure of schema.
-        The schema was defined with jsonschema.net, however modified quite a lot to add in 
+        The schema was defined with jsonschema.net, however modified quite a lot to add in
         required fields and enums
         Returns tuple - (True, "All Rules Files Valid") if the structure is OK, otherwise wil throw validation error and message
         """
@@ -153,7 +159,7 @@ class OverwatchValidator:
     def get_local_alarm_names(self):
         """
         Helper function for developer testing
-        Returns list of all filterNames defined in rules 
+        Returns list of all filterNames defined in rules
         """
         result = []
         for filename, rule in self.rules:
@@ -192,13 +198,13 @@ class OverwatchValidator:
 if __name__ == "__main__":
     """
     Parses arguments, instantiates OverwatchValidator class depending on arguments, and runs validate() step
-    This is mainly for integration within Overwatch CDK. 
+    This is mainly for integration within Overwatch CDK.
     """
     args = parser.parse_args()
 
     # Path to Schema
     SCHEMA_PATH = f"{args.directory}/ow-core/validator/internal/schema.yaml"
-    
+
     # validator class instance
     validator = OverwatchValidator(args.rules_folder_path, args.autofind)
     # if path given, attempt to validate

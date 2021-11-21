@@ -6,14 +6,22 @@ import aws_cdk.aws_sns_subscriptions as subscriptions
 
 EMAIL_REGEX = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
 
+
 class OverWatchEmailSNS(Stack):
     def __init__(self, scope: Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
         topic = sns.Topic(self, "OverWatch Email")
-        notif_email = CfnParameter(self, "emailparam", allowed_pattern=EMAIL_REGEX, description="Email to be sent SNS notification")
+        notif_email = CfnParameter(
+            self,
+            "emailparam",
+            allowed_pattern=EMAIL_REGEX,
+            description="Email to be sent SNS notification",
+        )
 
-        topic.add_subscription(subscriptions.EmailSubscription(notif_email.value_as_string))
+        topic.add_subscription(
+            subscriptions.EmailSubscription(notif_email.value_as_string)
+        )
 
 
 app = App()
