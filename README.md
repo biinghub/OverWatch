@@ -68,7 +68,9 @@ This is out of scope for OverWatch so please consider the above and proceed as n
 [Link to OverWatch Deployer README](ow-core/deployer/README.md)
 
 ## OverWatch Rules YAML Schema Reference
-[Link to OverWatch Rules Schema Reference](ow-core/validator/internal/schema.yaml)
+For a more human-readable reference, refer to this guide on enabling [autocomplete/suggestions on VSCode with the schema](/ow-core/validator/README.md#how-do-i-enable-autocomplete-for-my-rules-files-in-vscode).
+
+[Link to Raw OverWatch Rules Schema Reference](ow-core/validator/internal/schema.yaml)
 
 You can also see an example rule that has also been annotated [here](ow-core/example).
 
