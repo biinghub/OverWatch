@@ -4,6 +4,7 @@ from validator.validator import DuplicateNameException
 from validator.validator import ValidationException
 import unittest
 
+
 class ValidationTestCases(unittest.TestCase):
     def test_set_rules(self):
         # The test ensures argument parsing for rule declaration works
