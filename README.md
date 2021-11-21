@@ -82,3 +82,6 @@ This is a `pytest` project so please run `pytest` to run the unit tests within t
 
 ## Architecture
 ![OverWatch Architecture](overwatch_architecture.png)
+
+## Example Demo Project
+You can find an example demo project (Echo) with OverWatch integrated [here](https://github.com/binghub-community/project-echo-demo-app)
