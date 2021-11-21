@@ -10,6 +10,24 @@
 
 **OverWatch** is also designed to be easily installed onto your AWS account as shown below.
 
+## What is a rule?
+A rule is a yaml file containing a specific event to look out for, a trigger threshold and an action it may optionally choose to trigger.
+
+This could involve executing an AWS Lambda function which has the power to do virtually anything you want as long as you can integrate it.
+
+## How are rules enforced?
+At a glance, **OverWatch** leverages the power of **AWS CloudWatch** and our own integrations to enforce any rules that you have created.
+
+Come to one of our presentations where team 3 goes into a deeper dive into how **OverWatch** works. :)
+
+## What can I define a rule over?
+Out of the box, **OverWatch** supports rules to be defined over applications running on AWS deployment instances once the installation process has been completed.
+
+This does not mean that it is limited strictly to AWS deployment instances as long as the application can communicate to **AWS CloudWatch Logs** but the development team does not have the resources to assist in this.
+
+## How does this integrate with my application?
+[See video in Quick Start which will show OverWatch in action with an existing project with neglected security practices.](#video-guide-and-demonstration-quick-start)
+
 ## Installation
 ### Video Guide and Demonstration (Quick Start)
 [![OverWatch Video Guide and Demonstration](https://img.youtube.com/vi/iumwHlVJtLE/0.jpg)](https://www.youtube.com/watch?v=iumwHlVJtLE)
