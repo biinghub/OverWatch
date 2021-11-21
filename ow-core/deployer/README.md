@@ -11,7 +11,7 @@ The deployer communicates with AWS Cloudwatch to create/modify Cloudwatch Alarms
 Specifically, it works with the `put_metric_alarm` and `put_metric_filter` from `boto3` and translates fields from the rules into the Alarms and Metrics.
 
 ## Usage
-Team 3 **does not** recommend you use the deployer alone and as such will not provide usage documentation to prevent any shortcuts that will undermine the security of OverWatch. 
+Team 3 **does not** recommend you use the deployer alone and as such **will not** provide usage documentation to prevent any shortcuts that will undermine the security of OverWatch. 
 
 The deployer is not meant to be run standalone as it does not offer any rule validation. It trusts that the rules have been validated by the validator before communicating with CloudWatch. However this does not mean the rules are blindly trusted, the input fields undergo another round of validation and checking by Cloudwatch upon script execution.
 
