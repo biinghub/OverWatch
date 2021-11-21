@@ -64,8 +64,13 @@ This is out of scope for OverWatch so please consider the above and proceed as n
 ## OverWatch Validator
 [Link to OverWatch Validator README](ow-core/validator/README.md)
 
-## OverWatch Deployer (Rules Reference)
+## OverWatch Deployer
 [Link to OverWatch Deployer README](ow-core/deployer/README.md)
+
+## OverWatch Rules YAML Schema Reference
+[Link to OverWatch Rules Schema Reference](ow-core/validator/internal/schema.yaml)
+
+You can also see an example rule that has also been annotated [here](ow-core/example).
 
 ## Unit Testing
 This is a `pytest` project so please run `pytest` to run the unit tests within the project.
