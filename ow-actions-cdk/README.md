@@ -1,5 +1,5 @@
 
-# OverWatch Core CDK
+# OverWatch Sample Actions CDK
 
 This is the OverWatch Sample Actions CDK project which will deploy a sample email notification via AWS SNS.
 
