@@ -7,7 +7,9 @@
 
 ## What is the aim of OverWatch?
 **OverWatch** aims to provide a low-code, simple and efficient solution to connecting the dots between **AWS CloudWatch** and **security driven application logic**.
-**OverWatch** 
+**OverWatch**
+
+**OverWatch** is also designed to be easily installed onto your AWS account as shown below.
 
 ## Installation
 ### Video Guide and Demonstration (Quick Start)
