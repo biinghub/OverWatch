@@ -4,6 +4,8 @@ import json
 import os
 import argparse
 
+SCHEMA_PATH = f"ow-core/validator/internal/schema.yaml"
+
 """
 Arguments Engine - defining CLI parameters for customisability with validator script 
 i.e. python validator.py --autofind
