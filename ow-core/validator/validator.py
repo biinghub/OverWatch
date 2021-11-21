@@ -152,7 +152,7 @@ if __name__ == "__main__":
 
     # Path to Schema
     SCHEMA_PATH = f"{args.directory}/ow-core/validator/internal/schema.yaml"
-    
+
     # validator class instance
     validator = OverwatchValidator(args.rules_folder_path, args.autofind)
     # if path given, attempt to validate

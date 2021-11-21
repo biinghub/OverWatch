@@ -30,6 +30,7 @@ parser.add_argument(
     help="Enables autofinding of <rules_folder_path> directory within project",
 )
 
+
 class OverwatchDeployer:
     def __init__(self, rules_dir_path, autofind):
         self.rules_dir_path = (
