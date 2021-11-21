@@ -19,3 +19,14 @@ insert usage of validator as a library
 #### Can the validator be used on its own? 
 * Yes. The validator can be treated as a standalone package if you are interested in a quick way to validate your YAML files. 
 * Simply clone the `ow-core/validator` folder, and replace the `schema.yaml` file located in the `ow-core/validator/internal` folder with your own YAML schema. 
+
+#### How do I enable autocomplete for my rules files in VSCode? 
+* Install the YAML extension for VSCode which can be found [here](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
+* Then, go to settings, and type in `Yaml: Schemas` and click on `"Edit in settings.json"`
+* Then, provide the absolute path to the schema file in the extension settings. For example: 
+```yaml
+"yaml.schemas": {
+  "/path/to/project/ow-core/validator/internal/schema.yaml",
+}
+```
+* Save the file and reload VS Code. 
