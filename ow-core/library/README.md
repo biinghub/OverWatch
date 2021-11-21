@@ -2,7 +2,7 @@
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-## What does the OverWatch Validator do?
+## What does the OverWatch SDK do?
 The **OverWatch SDK** plays a crucial role in the functionality of OverWatch.
 
 In essence, the SDK provides a **simple interface** between **OverWatch** and the application utilising OverWatch. 
