@@ -43,6 +43,9 @@ See [ow-actions-cdk readme](ow-actions-cdk/README.md) for more specifics.
 ## OverWatch Deployer (Rules Reference)
 [Link to OverWatch Deployer README](ow-core/Deployer/README.md)
 
+## Unit Testing
+This is a `pytest` project so please run `pytest` to run the unit tests within the project.
+
 ## FAQ
 ### OverWatch: Cloud Resource and Deployment Pipeline. Secured.
 #### Can this replace my existing security controls?
