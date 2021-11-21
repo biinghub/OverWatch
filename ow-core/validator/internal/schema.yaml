@@ -68,7 +68,7 @@ properties:
         $id: '#/properties/Alarm'
         additionalProperties: true
         default: {}
-        description: An explanation about the purpose of this instance.
+        description: Description for the alarm
         examples:
         -   ActionsEnabled: true
             AlarmActions:
@@ -121,7 +121,7 @@ properties:
             ActionsEnabled:
                 $id: '#/properties/Alarm/properties/ActionsEnabled'
                 default: false
-                description: An explanation about the purpose of this instance.
+                description: Indicates whether actions should be executed during any changes to the alarm state. The default is TRUE.
                 examples:
                 - true
                 title: The ActionsEnabled schema
@@ -130,7 +130,7 @@ properties:
                 $id: '#/properties/Alarm/properties/AlarmActions'
                 additionalItems: true
                 default: []
-                description: An explanation about the purpose of this instance.
+                description: The actions to execute when this alarm transitions to the ALARM state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:*region* :ec2:stop | arn:aws:automate:*region* :ec2:terminate | arn:aws:automate:*region* :ec2:recover | arn:aws:automate:*region* :ec2:reboot | ``arn:aws:sns:region :account-id :sns-topic-name `` | ``arn:aws:autoscaling:region :account-id :scalingPolicy:policy-id :autoScalingGroupName/group-friendly-name :policyName/policy-friendly-name `` | ``arn:aws:ssm:region :account-id :opsitem:severity `` | ``arn:aws:ssm-incidents::account-id :response-plan:response-plan-name `` Valid Values (for use with IAM roles): arn:aws:swf:*region* :*account-id* :action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:*region* :*account-id* :action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:*region* :*account-id* :action/actions/AWS_EC2.InstanceId.Reboot/1.0 | arn:aws:swf:*region* :*account-id* :action/actions/AWS_EC2.InstanceId.Recover/1.0
                 examples:
                 - arn:aws:automate:*region* :ec2:stop
                 - arn:aws:automate:*region* :ec2:terminate
@@ -139,7 +139,7 @@ properties:
                     anyOf:
                     -   $id: '#/properties/Alarm/properties/AlarmActions/items/anyOf/0'
                         default: ''
-                        description: An explanation about the purpose of this instance.
+                        description: An explanation about the purpose of this action.
                         examples:
                         - arn:aws:automate:*region* :ec2:stop
                         - arn:aws:automate:*region* :ec2:terminate
@@ -150,7 +150,7 @@ properties:
             AlarmDescription:
                 $id: '#/properties/Alarm/properties/AlarmDescription'
                 default: ''
-                description: An explanation about the purpose of this instance.
+                description: The description for the alarm.
                 examples:
                 - string
                 title: The AlarmDescription schema
@@ -158,7 +158,7 @@ properties:
             AlarmName:
                 $id: '#/properties/Alarm/properties/AlarmName'
                 default: ''
-                description: An explanation about the purpose of this instance.
+                description: The name for the alarm. This name must be unique within the Region.
                 examples:
                 - alarmnamestring
                 title: The AlarmName schema
@@ -166,7 +166,7 @@ properties:
             ComparisonOperator:
                 $id: '#/properties/Alarm/properties/ComparisonOperator'
                 default: ''
-                description: An explanation about the purpose of this instance.
+                description: The arithmetic operation to use when comparing the specified statistic and threshold. The specified statistic value is used as the first operand.
                 enum:
                 - GreaterThanOrEqualToThreshold
                 - GreaterThanThreshold
@@ -182,7 +182,7 @@ properties:
             DatapointsToAlarm:
                 $id: '#/properties/Alarm/properties/DatapointsToAlarm'
                 default: 0
-                description: An explanation about the purpose of this instance.
+                description: The number of data points that must be breaching to trigger the alarm. This is used only if you are setting an M out of N alarm. In that case, this value is the M.
                 examples:
                 - 123
                 title: The DatapointsToAlarm schema
@@ -191,7 +191,7 @@ properties:
                 $id: '#/properties/Alarm/properties/Dimensions'
                 additionalProperties: true
                 default: {}
-                description: An explanation about the purpose of this instance.
+                description: The dimensions for the metric specified in MetricName.
                 examples:
                 -   Name: string
                     Value: string
@@ -199,7 +199,7 @@ properties:
                     Name:
                         $id: '#/properties/Alarm/properties/Dimensions/properties/Name'
                         default: ''
-                        description: An explanation about the purpose of this instance.
+                        description: The name of the dimension. Dimension names must contain only ASCII characters and must include at least one non-whitespace character.
                         examples:
                         - string
                         title: The Name schema
@@ -207,7 +207,7 @@ properties:
                     Value:
                         $id: '#/properties/Alarm/properties/Dimensions/properties/Value'
                         default: ''
-                        description: An explanation about the purpose of this instance.
+                        description: The value of the dimension. Dimension values must contain only ASCII characters and must include at least one non-whitespace character.
                         examples:
                         - string
                         title: The Value schema
@@ -220,7 +220,7 @@ properties:
             EvaluateLowSampleCountPercentile:
                 $id: '#/properties/Alarm/properties/EvaluateLowSampleCountPercentile'
                 default: ''
-                description: An explanation about the purpose of this instance.
+                description: Used only for alarms based on percentiles. If you specify ignore , the alarm state does not change during periods with too few data points to be statistically significant. If you specify evaluate or omit this parameter, the alarm is always evaluated and possibly changes state no matter how many data points are available.
                 examples:
                 - string
                 title: The EvaluateLowSampleCountPercentile schema
@@ -228,7 +228,7 @@ properties:
             EvaluationPeriods:
                 $id: '#/properties/Alarm/properties/EvaluationPeriods'
                 default: 0
-                description: An explanation about the purpose of this instance.
+                description: The number of periods over which data is compared to the specified threshold. If you are setting an alarm that requires that a number of consecutive data points be breaching to trigger the alarm, this value specifies that number. If you are setting an M out of N alarm, this value is the N.
                 examples:
                 - 123
                 title: The EvaluationPeriods schema
@@ -236,7 +236,7 @@ properties:
             ExtendedStatistic:
                 $id: '#/properties/Alarm/properties/ExtendedStatistic'
                 default: ''
-                description: An explanation about the purpose of this instance.
+                description: The percentile statistic for the metric specified in MetricName . Specify a value between p0.0 and p100.
                 examples:
                 - string
                 title: The ExtendedStatistic schema
@@ -245,7 +245,7 @@ properties:
                 $id: '#/properties/Alarm/properties/InsufficientDataActions'
                 additionalItems: true
                 default: []
-                description: An explanation about the purpose of this instance.
+                description: The actions to execute when this alarm transitions to the INSUFFICIENT_DATA state from any other state. Each action is specified as an Amazon Resource Name (ARN).
                 examples:
                 - String
                 items:
@@ -253,7 +253,7 @@ properties:
                     anyOf:
                     -   $id: '#/properties/Alarm/properties/InsufficientDataActions/items/anyOf/0'
                         default: ''
-                        description: An explanation about the purpose of this instance.
+                        description: An explanation about the purpose of this action.
                         examples:
                         - String
                         title: The first anyOf schema
@@ -263,7 +263,7 @@ properties:
             MetricName:
                 $id: '#/properties/Alarm/properties/MetricName'
                 default: ''
-                description: An explanation about the purpose of this instance.
+                description: The name for the metric associated with the alarm. For each PutMetricAlarm operation, you must specify either MetricName or a Metrics array. If you are creating an alarm based on a math expression, you cannot specify this parameter, or any of the Dimensions , Period , Namespace , Statistic , or ExtendedStatistic parameters. Instead, you specify all this information in the Metrics array.
                 examples:
                 - string
                 title: The MetricName schema
@@ -272,7 +272,7 @@ properties:
                 $id: '#/properties/Alarm/properties/Metrics'
                 additionalItems: true
                 default: []
-                description: An explanation about the purpose of this instance.
+                description: An explanation about the purpose of the Metrics.
                 examples:
                 -   -   AccountId: string
                         Expression: string
@@ -296,7 +296,7 @@ properties:
                     -   $id: '#/properties/Alarm/properties/Metrics/items/anyOf/0'
                         additionalProperties: true
                         default: {}
-                        description: An explanation about the purpose of this instance.
+                        description: An explanation about the purpose of the Metric.
                         examples:
                         -   AccountId: string
                             Expression: string
@@ -318,7 +318,7 @@ properties:
                             AccountId:
                                 $id: '#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/AccountId'
                                 default: ''
-                                description: An explanation about the purpose of this
+                                description: An explanation about the purpose of the AccountId
                                     instance.
                                 examples:
                                 - string
@@ -327,7 +327,7 @@ properties:
                             Expression:
                                 $id: '#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/Expression'
                                 default: ''
-                                description: An explanation about the purpose of this
+                                description: An explanation about the purpose of the Expression
                                     instance.
                                 examples:
                                 - string
@@ -336,7 +336,7 @@ properties:
                             Id:
                                 $id: '#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/Id'
                                 default: ''
-                                description: An explanation about the purpose of this
+                                description: An explanation about the purpose of the Id
                                     instance.
                                 examples:
                                 - String
@@ -345,7 +345,7 @@ properties:
                             Label:
                                 $id: '#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/Label'
                                 default: ''
-                                description: An explanation about the purpose of this
+                                description: An explanation about the purpose of the Label
                                     instance.
                                 examples:
                                 - string
@@ -355,7 +355,7 @@ properties:
                                 $id: '#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/MetricStat'
                                 additionalProperties: true
                                 default: {}
-                                description: An explanation about the purpose of this
+                                description: An explanation about the purpose of MetricStat
                                     instance.
                                 examples:
                                 -   Metric:
@@ -372,8 +372,7 @@ properties:
                                         $id: '#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/MetricStat/properties/Metric'
                                         additionalProperties: true
                                         default: {}
-                                        description: An explanation about the purpose
-                                            of this instance.
+                                        description: An explanation about the purpose of the Metric.
                                         examples:
                                         -   Dimensions:
                                             -   Name: sting
@@ -385,8 +384,7 @@ properties:
                                                 $id: '#/properties/Alarm/properties/Metrics/items/anyOf/0/properties/MetricStat/properties/Metric/properties/Dimensions'
                                                 additionalItems: true
                                                 default: []
-                                                description: An explanation about
-                                                    the purpose of this instance.
+                                                description: An explanation about the purpose of the Dimension.
                                                 examples:
                                                 -   -   Name: sting
                                                         Value: string
@@ -549,7 +547,7 @@ properties:
             Namespace:
                 $id: '#/properties/Alarm/properties/Namespace'
                 default: ''
-                description: An explanation about the purpose of this instance.
+                description: The namespace for the metric associated specified in MetricName.
                 examples:
                 - string
                 title: The Namespace schema
@@ -558,7 +556,7 @@ properties:
                 $id: '#/properties/Alarm/properties/OKActions'
                 additionalItems: true
                 default: []
-                description: An explanation about the purpose of this instance.
+                description: The actions to execute when this alarm transitions to an OK state from any other state. Each action is specified as an Amazon Resource Name (ARN).
                 examples:
                 - arn:aws:automate:*region* :ec2:stop
                 - arn:aws:automate:*region* :ec2:terminate
@@ -567,7 +565,7 @@ properties:
                     anyOf:
                     -   $id: '#/properties/Alarm/properties/OKActions/items/anyOf/0'
                         default: ''
-                        description: An explanation about the purpose of this instance.
+                        description: An explanation about the purpose of the item.
                         examples:
                         - arn:aws:automate:*region* :ec2:stop
                         - arn:aws:automate:*region* :ec2:terminate
@@ -578,7 +576,7 @@ properties:
             Period:
                 $id: '#/properties/Alarm/properties/Period'
                 default: 0
-                description: An explanation about the purpose of this instance.
+                description: The length, in seconds, used each time the metric specified in MetricName is evaluated. Valid values are 10, 30, and any multiple of 60.
                 examples:
                 - 123
                 title: The Period schema
@@ -586,7 +584,7 @@ properties:
             Statistic:
                 $id: '#/properties/Alarm/properties/Statistic'
                 default: ''
-                description: An explanation about the purpose of this instance.
+                description: The statistic for the metric specified in MetricName , other than percentile. For percentile statistics, use ExtendedStatistic. When you call PutMetricAlarm and specify a MetricName , you must specify either Statistic or ExtendedStatistic, but not both.
                 enum:
                 - SampleCount
                 - Average
@@ -601,7 +599,7 @@ properties:
                 $id: '#/properties/Alarm/properties/Tags'
                 additionalItems: true
                 default: []
-                description: An explanation about the purpose of this instance.
+                description: A list of key-value pairs to associate with the metric stream. You can associate as many as 50 tags with a metric stream. Tags can help you organize and categorize your resources. You can also use them to scope user permissions by granting a user permission to access or change only resources with certain tag values.
                 examples:
                 -   -   Key: string
                         Value: string
@@ -644,7 +642,7 @@ properties:
             Threshold:
                 $id: '#/properties/Alarm/properties/Threshold'
                 default: 0.0
-                description: An explanation about the purpose of this instance.
+                description: The value against which the specified statistic is compared. This parameter is required for alarms based on static thresholds, but should not be used for alarms based on anomaly detection models.
                 examples:
                 - 123.0
                 title: The Threshold schema
@@ -652,7 +650,7 @@ properties:
             ThresholdMetricId:
                 $id: '#/properties/Alarm/properties/ThresholdMetricId'
                 default: ''
-                description: An explanation about the purpose of this instance.
+                description: If this is an alarm based on an anomaly detection model, make this value match the ID of the ANOMALY_DETECTION_BAND function.
                 examples:
                 - string
                 title: The ThresholdMetricId schema
@@ -660,7 +658,7 @@ properties:
             TreatMissingData:
                 $id: '#/properties/Alarm/properties/TreatMissingData'
                 default: ''
-                description: An explanation about the purpose of this instance.
+                description: Sets how this alarm is to handle missing data points. If TreatMissingData is omitted, the default behavior of missing is used.
                 examples:
                 - string
                 title: The TreatMissingData schema
@@ -668,7 +666,7 @@ properties:
             Unit:
                 $id: '#/properties/Alarm/properties/Unit'
                 default: ''
-                description: An explanation about the purpose of this instance.
+                description: The unit of measure for the statistic. For example, the units for the Amazon EC2 NetworkIn metric are Bytes because NetworkIn tracks the number of bytes that an instance receives on all network interfaces.
                 enum:
                 - Seconds
                 - Microseconds
@@ -713,7 +711,7 @@ properties:
         $id: '#/properties/Metric'
         additionalProperties: true
         default: {}
-        description: An explanation about the purpose of this instance.
+        description: An explanation about the purpose of this metric filter.
         examples:
         -   filterName: FilterName
             filterPattern: FilterPattern
@@ -729,7 +727,7 @@ properties:
             filterName:
                 $id: '#/properties/Metric/properties/filterName'
                 default: ''
-                description: An explanation about the purpose of this instance.
+                description: A name for the metric filter.
                 examples:
                 - FilterName
                 title: The filterName schema
@@ -737,7 +735,7 @@ properties:
             filterPattern:
                 $id: '#/properties/Metric/properties/filterPattern'
                 default: ''
-                description: An explanation about the purpose of this instance.
+                description: A filter pattern for extracting metric data out of ingested log events.
                 examples:
                 - FilterPattern
                 title: The filterPattern schema
@@ -745,7 +743,7 @@ properties:
             logGroupName:
                 $id: '#/properties/Metric/properties/logGroupName'
                 default: ''
-                description: An explanation about the purpose of this instance.
+                description: The name of the log group.
                 examples:
                 - Log
                 title: The logGroupName schema
@@ -754,7 +752,7 @@ properties:
                 $id: '#/properties/Metric/properties/metricTransformations'
                 additionalItems: true
                 default: []
-                description: An explanation about the purpose of this instance.
+                description: A collection of information that defines how metric data gets emitted.
                 examples:
                 -   -   defaultValue: 1.23
                         dimensions: string
@@ -768,7 +766,7 @@ properties:
                     -   $id: '#/properties/Metric/properties/metricTransformations/items/anyOf/0'
                         additionalProperties: true
                         default: {}
-                        description: An explanation about the purpose of this instance.
+                        description: An explanation about the purpose of this transformation.
                         examples:
                         -   defaultValue: 1.23
                             dimensions: string
@@ -780,8 +778,7 @@ properties:
                             defaultValue:
                                 $id: '#/properties/Metric/properties/metricTransformations/items/anyOf/0/properties/defaultValue'
                                 default: 0.0
-                                description: An explanation about the purpose of this
-                                    instance.
+                                description: The value to emit when a filter pattern does not match a log event. This value can be null.
                                 examples:
                                 - 1.23
                                 title: The defaultValue schema
@@ -789,8 +786,7 @@ properties:
                             dimensions:
                                 $id: '#/properties/Metric/properties/metricTransformations/items/anyOf/0/properties/dimensions'
                                 default: ''
-                                description: An explanation about the purpose of this
-                                    instance.
+                                description: The fields to use as dimensions for the metric. One metric filter can include as many as three dimensions.
                                 examples:
                                 - string
                                 title: The dimensions schema
@@ -798,8 +794,7 @@ properties:
                             metricName:
                                 $id: '#/properties/Metric/properties/metricTransformations/items/anyOf/0/properties/metricName'
                                 default: ''
-                                description: An explanation about the purpose of this
-                                    instance.
+                                description: The name of the CloudWatch metric.
                                 examples:
                                 - metricname
                                 title: The metricName schema
@@ -807,8 +802,7 @@ properties:
                             metricNamespace:
                                 $id: '#/properties/Metric/properties/metricTransformations/items/anyOf/0/properties/metricNamespace'
                                 default: ''
-                                description: An explanation about the purpose of this
-                                    instance.
+                                description: A custom namespace to contain your metric in CloudWatch. Use namespaces to group together metrics that are similar.
                                 examples:
                                 - metricnamespace
                                 title: The metricNamespace schema
@@ -816,8 +810,7 @@ properties:
                             metricValue:
                                 $id: '#/properties/Metric/properties/metricTransformations/items/anyOf/0/properties/metricValue'
                                 default: ''
-                                description: An explanation about the purpose of this
-                                    instance.
+                                description: The value to publish to the CloudWatch metric when a filter pattern matches a log event.
                                 examples:
                                 - stringmetricvalue
                                 title: The metricValue schema
@@ -825,8 +818,7 @@ properties:
                             unit:
                                 $id: '#/properties/Metric/properties/metricTransformations/items/anyOf/0/properties/unit'
                                 default: ''
-                                description: An explanation about the purpose of this
-                                    instance.
+                                description: The unit to assign to the metric. If you omit this, the unit is set as None.
                                 enum:
                                 - Seconds
                                 - Microseconds
