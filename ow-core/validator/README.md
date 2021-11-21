@@ -65,7 +65,7 @@ Path to rules folder. By default the deployer will look for a 'rules' directory 
 * Then, provide the absolute path to the schema file in the extension settings. For example: 
 ```yaml
 "yaml.schemas": {
-  "/path/to/project/ow-core/validator/internal/schema.yaml",
+  "/path/to/overwatch/ow-core/validator/internal/schema.yaml",
 }
 ```
 * Save the file and reload VS Code. 
