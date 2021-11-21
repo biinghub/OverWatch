@@ -55,12 +55,12 @@ command.
 
 OverWatch Core also provides some parameters for you to change certain aspects of the core behaviour:
 
-* `autofind`         enables autofind of rules yaml file for OverWatch if parameter is present (and not 'False')
+* `autofind`         enables autofind of rules yaml file for OverWatch if parameter is present (and not 'False') | defaults to 'False'
 ```
 $ cdk deploy --all --parameters enableAutofind=True
 ```
 
-* `rulesDirPath`     specify the path to the rules directory | specify the directory name if autofind is enabled
+* `rulesDirPath`     specify the path to the rules directory | specify the directory name if autofind is enabled | defaults to 'rules'
 ```
 # autofind disabled
 $ cdk deploy --all --parameters rulesDirPath=this-dir-is-on-top-level/rules
