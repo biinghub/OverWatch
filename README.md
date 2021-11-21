@@ -32,9 +32,12 @@ Some parameters to modify the CDK deployment are available on [ow-pipeline-cdk r
 ### OverWatch Sample Actions
 The easiest way to install the sample OverWatch actions into your AWS account is to naviagte on an AWS shell environment to the `ow-actions-cdk` folder, then type in the following command:
 ```
-cdk deploy --all
+$ cdk deploy --all --parameters emailparam=<notif-email-here>
 ```
 See [ow-actions-cdk readme](ow-actions-cdk/README.md) for more specifics.
+
+**NOTE:** Team 3 **strongly recommends** you utilise the AWS Console to create the SNS Topics and Lambda Functions as using an IaC solution is not very usable without significant investment in a creation script.
+This is out of scope for OverWatch so please consider the above and proceed as necessary.
 
 ### OverWatch Integration (Application)
 [See Video in Quick Start](#video-guide-and-demonstration-quick-start)
