@@ -79,3 +79,6 @@ This is a `pytest` project so please run `pytest` to run the unit tests within t
 
 #### How do I get started with OverWatch?
 * Please see the above [Quick Start Video](#video-guide-and-demonstration-quick-start)
+
+## Architecture
+![OverWatch Architecture](overwatch_architecture.png)
