@@ -8,7 +8,7 @@ The **OverWatch Validator** plays a crucial role in the **rules** deployment pro
 ## How does it do this? 
 The robustly defined **YAML schema** is checked against user-defined rule configuration files, which are read by the **OverWatch Deployer**. You can place these configuration files in a folder named `rules` anywhere in your project directory. 
 
-Otherwise, you can place the configuration files in a folder name of your choice - instructions on how to do this can be found [here](https://github.com/hexDoor/cs9447-project/tree/master/ow-pipeline-cdk#cdk-deploy-parameters)
+Otherwise, you can place the configuration files in a folder name of your choice - instructions on how to do this can be found [here](../../ow-pipeline-cdk/README.md#cdk-deploy-parameters)
 
 ## Usage
 ### Validator CLI
