@@ -54,6 +54,12 @@ class OverwatchDeployer:
         print(f"Loaded {', '.join(self.rules)}")
 
     def deploy_rules(self):
+        """
+        Opens a rule file and generate a series of Alarms/MetricFilters.
+
+        If a field is not defined in the rule, it is populated by the corresponding default value defined by the default rule. If the value in the default rule is also empty then the field is removed from the request.
+
+        """
         for rule in self.rules:
             with open(self.rules_dir_path + rule, "r") as stream, open(
                 DEFAULT_PATH, "r"
