@@ -1,0 +1,20 @@
+---
+-   Alarm:
+        AlarmName: simple-rule                          # Unique Alarm Name
+        ComparisonOperator: GreaterThanThreshold        # Threshold Operator
+        EvaluationPeriods: 10
+        DatapointsToAlarm: 10
+        Statistic: Sum                                  # Sum identifies that this is a cumulative threshold alarm
+        Threshold: 5                                    # Threshold is set at 5
+        Period: 10
+        MetricName: simple-metric                       # The metric the alarm will read off for information to trigger or not
+        Namespace: simple                               # The namespace for the alarm for easy categorisation and organisation
+    Metric:
+        filterName: simple-filter                       # Unique Metric Filter Name
+        filterPattern: CRITICAL simple                  # Filter pattern which the metric will determine if a log is related to this metric
+        logGroupName: /var/log/OverWatch                # Leave this as is unless it needs to be changed
+        metricTransformations:
+        -   metricName: simple-metric                   # Unique Metric Name
+            metricNamespace: simple                     # The namespace for the metric for easy categorisation and organisation
+            metricValue: "1"                            # If a related log is detected, what metric value this metric will have
+            unit: Count                                 # The metric unit (Count should be usually what you're looking for)

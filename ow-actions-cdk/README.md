@@ -1,7 +1,10 @@
 
-# OverWatch Core CDK
+# OverWatch Sample Actions CDK
 
-This is the OverWatch Core CDK project which will deploy the necessary infrastructure and projects to be able to utilise OverWatch on your AWS account.
+This is the OverWatch Sample Actions CDK project which will deploy a sample email notification via AWS SNS.
+
+Team 3 **strongly recommends** you utilise the AWS Console to create the SNS Topics and Lambda Functions as using an IaC solution is not very usable without significant investment in a creation script.
+This is out of scope for OverWatch so please consider the above and proceed as necessary.
 
 This project is set up like a standard Python project.  The initialization
 process also creates a virtualenv within this project, stored under the `.venv`
@@ -35,16 +38,10 @@ Once the virtualenv is activated, you can install the required dependencies.
 $ pip install -r requirements.txt
 ```
 
-At this point you can now synthesize the CloudFormation template for OverWatch Core.
+At this point you can now deploy the OverWatch Sample Actions to your AWS account.
 
 ```
-$ cdk synth
-```
-
-Alternatively, you can deploy the OverWatch Core to your AWS account.
-
-```
-$ cdk deploy --all
+$ cdk deploy --all --parameters emailparam=<notif-email-here>
 ```
 
 To add additional dependencies, for example other CDK libraries, just add
@@ -53,25 +50,11 @@ command.
 
 ## CDK Deploy Parameters
 
-OverWatch Core also provides some parameters for you to change certain aspects of the core behaviour:
+OverWatch Sample Actions also provides some parameters for you to change certain behaviour:
 
-* `autofind`         enables autofind of rules yaml file for OverWatch if parameter is present (and not 'False') | defaults to 'False'
+* `email-param`         email to receive the SNS notification | Required to give a valid email to deploy
 ```
-$ cdk deploy --all --parameters enableAutofind=True
-```
-
-* `rulesDirPath`     specify the path to the rules directory | specify the directory name if autofind is enabled | defaults to 'rules'
-```
-# autofind disabled
-$ cdk deploy --all --parameters rulesDirPath=this-dir-is-on-top-level/rules
-
-# autofind enabled
-$ cdk deploy --all --parameters rulesDirPath=example --parameters enableAutofind=True
-```
-
-* `overWatchBucket`  specify the s3 bucket name from which OverWatch core scripts will be synced from if hosting OverWatch core scripts locally | defaults to 'overwatchglobal' maintained by dev
-```
-$ cdk deploy --all --parameters overWatchBucket=<bucket-name-here>
+$ cdk deploy --all --parameters emailparam=beffjezos9447@gmail.com
 ```
 
 ## Other Useful commands
@@ -90,5 +73,5 @@ $ cdk deploy --all --parameters overWatchBucket=<bucket-name-here>
 ### Parameters do not seem to be resetting when redeploying
 * Try adding in the following option to the deployment command:
 ```
-$ cdk deploy --all --no-previous-parameters
+$ cdk deploy --all --parameters emailparam=<notif-email-here> --no-previous-parameters
 ```

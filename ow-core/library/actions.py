@@ -3,8 +3,10 @@ import time
 import enum
 
 # Deployment Instance requires these AWS permissions:
-# Logs:DescribeLogStreams
-# Logs: PutLogEvents
+# logs:DescribeLogStreams
+# logs:PutLogEvents
+# logs:CreateLogGroup
+# logs:CreateLogStream
 
 DEFAULT_LOG_GROUP = "/var/log/Overwatch"
 
@@ -78,4 +80,12 @@ class OverWatch_Logger:
     def monitor_event(
         self, priority: Priority, application: str, eventPrefix: str, message: str
     ):
+        """
+        Send Activity Log to OverWatch
+
+        priority: Priority - priority of event (enum from SDK)
+        application: str - application name
+        eventPrefix: str - unique prefix to identify specific event type
+        message: str - message for log
+        """
         self.__send_log(priority, application, eventPrefix, message)

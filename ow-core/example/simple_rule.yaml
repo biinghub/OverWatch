@@ -18,23 +18,3 @@
             metricNamespace: simple
             metricValue: "1"
             unit: Count
-
--   Alarm:
-        AlarmName: simple-rule2
-        ComparisonOperator: GreaterThanThreshold
-        EvaluationPeriods: 10
-        DatapointsToAlarm: 10
-        Statistic: Sum
-        Threshold: 5
-        Period: 10
-        MetricName: simple-metric2
-        Namespace: simple
-    Metric:
-        filterName: simple-filter2
-        filterPattern: CRITICAL simple2
-        logGroupName: /var/log/OverWatch
-        metricTransformations:
-        -   metricName: simple-metric2
-            metricNamespace: simple
-            metricValue: "1"
-            unit: Count
