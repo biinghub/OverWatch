@@ -74,6 +74,10 @@ You can also see an example rule that has also been annotated [here](ow-core/exa
 
 ## Unit Testing
 This is a `pytest` project so please run `pytest` to run the unit tests within the project.
+On the top level of the repository:
+```
+python3 -m pytest
+```
 
 ## FAQ
 ### OverWatch: Cloud Resource and Deployment Pipeline. Secured.
