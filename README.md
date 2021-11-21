@@ -27,6 +27,13 @@ Some parameters to modify the CDK deployment are available on [ow-pipeline-cdk r
 * Place [`actions.py`](ow-core/library/actions.py) in the top level of your project directory or python interpreter site packages.
 * If necessary, place a blank `__init__.py` file in the same area to make `actions.py` importable.
 
+### OverWatch Actions
+The easiest way to install the sample OverWatch actions into your AWS account is to naviagte on an AWS shell environment to the `ow-actions-cdk` folder, then type in the following command:
+```
+cdk deploy --all
+```
+See [ow-actions-cdk readme](ow-actions-cdk/README.md) for more specifics.
+
 ### OverWatch Integration (Application)
 [See Video in Quick Start](#video-guide-and-demonstration-quick-start)
 
