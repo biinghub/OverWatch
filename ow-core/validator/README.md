@@ -14,9 +14,9 @@ Otherwise, you can place the configuration files in a folder name of your choice
 ### Validator CLI
 If you are using the validator standalone, and have imported the `ow-core/validator` folder to your project directory, you can use the following CLI arguments:
 ```
-python3 project/validator.py --autofind
+$ python3 project/validator.py <rules-directory-name> --autofind
 OR
-python3 project/validator.py path/to/rules/folder
+$ python3 project/validator.py path/to/rules/folder    # (SUGGESTED)
 ```
 Otherwise, it is recommended the validator is used with OverWatch.
 
@@ -39,6 +39,20 @@ def test_validate():
     #Provided your configuration files are correct
     assert v.validate() == (True, "All Rule Files Valid")
 ```
+
+## Arguments
+
+`--directory` 
+
+Path to OverWatch Core Application. Default is "." or current directory
+
+`--autofind`
+
+Enables autofinding of <rules_folder_path> directory within project. If the autofind flag is set, then provide the directory name of the rules folder.
+
+`rules_folder_path` 
+
+Path to rules folder. By default the deployer will look for a 'rules' directory in the project.
 
 ## FAQ
 #### Can the validator be used on its own? 
